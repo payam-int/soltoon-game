@@ -1,6 +1,5 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
-import com.google.gson.annotations.Expose;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDamagedEvent;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDiedEvent;
 import ir.pint.soltoon.utils.shared.facades.json.Secure;

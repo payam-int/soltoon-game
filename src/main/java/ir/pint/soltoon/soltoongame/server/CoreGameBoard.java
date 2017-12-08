@@ -61,14 +61,6 @@ public class CoreGameBoard extends GameBoard {
         }
     }
 
-    public void print() {
-        for (int j = 0; j < height; j++) {
-            System.out.println();
-            for (int i = 0; i < width; i++)
-                System.out.print(getCellByIndex(i, j));
-        }
-    }
-
     public GameObject ShootToCell(Cell target, Integer amount) {
         GameObject o = target.getGameObject();
         if (o == null) return null;

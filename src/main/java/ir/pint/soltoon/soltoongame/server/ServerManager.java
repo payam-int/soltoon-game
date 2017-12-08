@@ -190,7 +190,6 @@ public class ServerManager extends Thread {
             QueryInitialize queryInitialize = new QueryInitialize(client);
             Command command = server.query(queryInitialize, client, GameConfiguration.INITIALIZE_TIMEOUT);
 
-            System.out.println(command);
             if (command != null && command instanceof CommandInitialize) {
                 ResultInitialize resultInitialize = new ResultInitialize(client, Status.SUCCESS);
                 server.sendResult(resultInitialize, command, client);

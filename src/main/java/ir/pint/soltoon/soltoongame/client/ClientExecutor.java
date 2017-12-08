@@ -21,7 +21,6 @@ public class ClientExecutor extends DefaultTimeAwareBean implements ClientExecut
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(action);
         command = new CommandAction(query.getId(), action);
         return command;
     }

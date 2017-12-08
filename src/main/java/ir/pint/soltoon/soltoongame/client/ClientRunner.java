@@ -12,9 +12,8 @@ public class ClientRunner {
     public static void run(Class<? extends Player> player) {
         run(player, ComRemoteConfig.fromEnv());
     }
+
     public static void run(Class<? extends Player> player, ComRemoteConfig remoteConfig) {
-        ComOutputStream.DEBUG = true;
-        ComInputStream.DEBUG = true;
         Comminucation connect = ComClient.connect(remoteConfig, 5000);
         ClientManager clientManager = new ClientManager(player, connect);
         clientManager.run();

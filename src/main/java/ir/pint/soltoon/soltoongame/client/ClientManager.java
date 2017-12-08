@@ -150,7 +150,6 @@ public class ClientManager {
     private void postProcessCommand(Command command, Result commandResult, Object extra) {
         if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddFighterType) {
             if (commandResult instanceof ResultAddFighterAction && commandResult.getStatus() == Status.SUCCESS) {
-                System.out.println("Adddddddddddddding agent");
                 addAgent(((Agent) extra), ((ResultAddFighterAction) commandResult).getFighterId());
             }
         }
