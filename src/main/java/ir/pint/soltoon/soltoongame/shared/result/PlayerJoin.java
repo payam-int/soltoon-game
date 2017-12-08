@@ -1,14 +1,14 @@
 package ir.pint.soltoon.soltoongame.shared.result;
 
 import ir.pint.soltoon.utils.shared.comminucation.ComRemoteInfo;
-import ir.pint.soltoon.utils.shared.facades.result.DefaultEventLog;
-import ir.pint.soltoon.utils.shared.facades.result.EventLog;
 
-public class PlayerJoined extends DefaultEventLog {
+public class PlayerJoin extends Event {
     private long id;
     private ComRemoteInfo remoteInfo;
 
-    public PlayerJoined(long id, ComRemoteInfo remoteInfo) {
+    public PlayerJoin(long id, ComRemoteInfo remoteInfo) {
+        super(EventType.PLAYER_JOIN);
+
         this.id = id;
         this.remoteInfo = remoteInfo;
     }

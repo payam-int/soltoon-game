@@ -1,10 +1,9 @@
 package ir.pint.soltoon.soltoongame.shared.data.action;
 
 import ir.pint.soltoon.soltoongame.server.CoreGameBoard;
-import ir.pint.soltoon.soltoongame.shared.data.Fighter;
 import ir.pint.soltoon.soltoongame.shared.data.map.FighterType;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
-import ir.pint.soltoon.soltoongame.shared.result.AgentAdded;
+import ir.pint.soltoon.soltoongame.shared.result.AgentAddEvent;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 import ir.pint.soltoon.utils.shared.facades.uuid.UUID;
 
@@ -27,7 +26,7 @@ public class AddFighterType extends Action {
     @Override
     public boolean execute(CoreGameBoard gb, Object... extra) {
         if (gb.getObjectByID(gb.getMyID()) != null) return true; //GameObject nabashe yevaght
-        if (gb.getCellByIndex(x, y).gameObject != null) return true; // por nabashe yevaght
+        if (gb.getCellByIndex(x, y).getGameObject() != null) return true; // por nabashe yevaght
         if (gb.getMoneyByID(gb.getMyID()) - type.getCost() < 0) return true; // pool bashe
         boolean ok = true;
 
@@ -50,7 +49,7 @@ public class AddFighterType extends Action {
         CoreGameBoard.giveCellToObject(gb.getCellByIndex(x, y), o);
         gb.addObject(o);
 
-        ResultStorage.addEvent(new AgentAdded(id, gb.getMyID()));
+        ResultStorage.addEvent(new AgentAddEvent(id, x, y, type, type.getHP(), gb.getMyID()));
         return false;
     }
 }

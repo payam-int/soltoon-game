@@ -12,15 +12,10 @@ import java.util.Random;
 
 public abstract class Agent implements Serializable, TimeAwareBean {
 
+    private TimeAwareBean parentBean;
     private Long id;
 
-    private TimeAwareBean parentBean;
-
     protected Agent() {
-    }
-
-    protected Agent(Long id) {
-        this.id = id;
     }
 
     public abstract void init();

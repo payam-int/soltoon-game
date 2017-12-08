@@ -1,6 +1,5 @@
 package ir.pint.soltoon.soltoongame.client;
 
-import ir.pint.soltoon.soltoongame.ai.My;
 import ir.pint.soltoon.soltoongame.shared.Platform;
 import ir.pint.soltoon.soltoongame.shared.data.Player;
 import ir.pint.soltoon.utils.shared.comminucation.*;
@@ -10,6 +9,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class ClientRunner {
+    public static void run(Class<? extends Player> player) {
+        run(player, ComRemoteConfig.fromEnv());
+    }
     public static void run(Class<? extends Player> player, ComRemoteConfig remoteConfig) {
         ComOutputStream.DEBUG = true;
         ComInputStream.DEBUG = true;

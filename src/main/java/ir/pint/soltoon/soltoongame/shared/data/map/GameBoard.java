@@ -1,33 +1,57 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
 import ir.pint.soltoon.utils.shared.facades.json.Secure;
-import ir.pint.soltoon.utils.shared.facades.json.SecureMap;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Secure
-public class GameBoard implements Serializable {
+public class GameBoard {
     private Cell[][] cells;
     protected int height, width;
     protected Map<Long, GameObject> id2object;
     protected Long myID;
+    protected int myMoney;
 
-    @SecureMap(keys = Long.class, values = Integer.class)
-    protected Map<Long, Integer> playerID2money;
+    protected int round;
 
-    @SecureMap(keys = Long.class, values = Integer.class)
+    private Long playerId;
+
+    protected Map<Long, Integer> playerID2money = new HashMap<>();
+
     protected Map<Long, Integer> playerID2moneyPerTurn;
 
-    @SecureMap(keys = Long.class, values = Long.class)
     protected Map<Long, Long> id2owner;
 
-    @SecureMap(keys = Long.class, values = Integer.class)
     protected Map<Long, Integer> playerID2penalty;
 
 
     protected Map<Long, List<Long>> playerID2ids;
     protected Set<Long> playerIDs;
+
+
+    public Long getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
+    }
+    public GameBoard() {
+
+    }
+
+    public void init() {
+        for (Cell[] row : cells) {
+            if (row == null || row.length == 0)
+                continue;
+
+            for (Cell cell : row) {
+                cell.setGameObject(id2object.getOrDefault(cell.gameObjectId, null));
+                cell.init();
+            }
+        }
+    }
 
     protected GameBoard(int h, int w) {
 
@@ -38,7 +62,6 @@ public class GameBoard implements Serializable {
             for (int j = 0; j < height; j++)
                 cells[i][j] = new Cell(i, j);
         id2object = new HashMap<>();
-        playerID2money = new HashMap<>();
         playerID2penalty = new HashMap<>();
         id2owner = new HashMap<>();
         playerID2moneyPerTurn = new HashMap<>();
@@ -62,6 +85,11 @@ public class GameBoard implements Serializable {
 
     public GameObject getObjectByID(Long id) {
         return id2object.get(id);
+    }
+
+    public Map<Long, GameObject> getId2object() {
+
+        return id2object;
     }
 
     public Long getownerByID(Long id) {
@@ -99,6 +127,18 @@ public class GameBoard implements Serializable {
 
     public Set<Long> getPlayerIDs() {
         return playerIDs;
+    }
+
+    public int getMyMoney() {
+        return myMoney;
+    }
+
+    public void setMyMoney(int myMoney) {
+        this.myMoney = myMoney;
+    }
+
+    public int getRound() {
+        return round;
     }
 
     @Override

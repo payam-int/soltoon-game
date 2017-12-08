@@ -23,9 +23,9 @@ import java.util.*;
  */
 public class ServerManager extends Thread {
 
-    public final int NUMBER_OF_PLAYERS = 2;
+    public final int NUMBER_OF_PLAYERS = 1;
     public final int HEIGHT = 10, WIDTH = 10;
-    public final int ROUNDS = 20;
+    public final int ROUNDS = 50;
 
 
     private Server server;
@@ -37,12 +37,14 @@ public class ServerManager extends Thread {
     public ServerManager(Server server) {
         this.server = server;
         this.gameBoard = new CoreGameBoard(HEIGHT, WIDTH);
+        gameBoard.setPlayerByFighter(playerByFighter);
     }
 
     @Override
     public void run() {
         connectToClients();
         for (int round = 0; round < ROUNDS; round++) {
+            gameBoard.setRound(round);
             doRound();
         }
 
@@ -61,6 +63,7 @@ public class ServerManager extends Thread {
     }
 
     private void doRound() {
+
         queryPlayers();
         queryFighters();
         removeKilledFighters();
@@ -73,10 +76,7 @@ public class ServerManager extends Thread {
             QueryFinalize queryFinalize = new QueryFinalize(fighter);
             Command command = server.query(queryFinalize, player, GameConfiguration.QUERY_WAIT_TIME);
             server.sendResult(new ResultFinalize(fighter, Status.SUCCESS), command, player);
-            System.out.println(fighter);
-            System.out.println(fighters);
             fighters.remove(fighter);
-            System.out.println(fighters);
         }
     }
 
@@ -88,9 +88,10 @@ public class ServerManager extends Thread {
             if (gameBoard.getObjectByID(fighter) == null || gameBoard.recentlyKilledIDs.contains(fighter))
                 continue;
 
-            updateGameBoardForFighter(fighter);
 
-            QueryAction queryAction = new QueryAction(player, gameBoard);
+            updateGameBoardForFighter(fighter, player);
+
+            QueryAction queryAction = new QueryAction(fighter, gameBoard);
             Command command = server.query(queryAction, player, GameConfiguration.QUERY_WAIT_TIME);
 
             if (command == null)
@@ -117,8 +118,10 @@ public class ServerManager extends Thread {
         }
     }
 
-    private void updateGameBoardForFighter(Long fighter) {
+    private void updateGameBoardForFighter(Long fighter, Long player) {
         gameBoard.setMyID(fighter);
+        gameBoard.setPlayerId(player);
+        gameBoard.setMyMoney(gameBoard.getMoneyByID(player));
         gameBoard.timePassedForCurrentPlayer();
     }
 
@@ -146,6 +149,7 @@ public class ServerManager extends Thread {
                     HashMap<String, Long> resultMeta = new HashMap<>();
                     resultMeta.put("id", id);
                     playerByFighter.put(id, player);
+                    fighters.add(id);
                     result = ResultAddFighterAction.successful(player, id);
                 }
 
@@ -163,59 +167,11 @@ public class ServerManager extends Thread {
 
     private void updateGameBoardForPlayer(Long player) {
         gameBoard.setMyID(player);
+        gameBoard.setPlayerId(player);
         gameBoard.setMoneyPerTurn(gameBoard.getMyID(), 5);
+        gameBoard.setMyMoney(gameBoard.getMoneyByID(player));
         gameBoard.timePassedForCurrentPlayer();
     }
-
-//    private void doShit() {
-//        if (true)
-//            return;
-//
-//        while (true) {
-//            for (Long playerID : playerIDs) {
-//                while (true) {
-//                    gameBoard.setMyID(playerID);
-//                    gameBoard.setMoneyPerTurn(gameBoard.getMyID(), 5);
-//                    gameBoard.timePassedForCurrentPlayer();
-//                    Command command = server.sendQuery(new QueryAction(playerID, gameBoard));
-//
-//                    try {
-//
-//                        if (command instanceof CommandAction) {
-//
-//                            Action action = ((CommandAction) command).action;
-//
-//                            if (action instanceof AddFighter || action instanceof Nothing) {
-//                                if (action.execute(gameBoard))
-//                                    throw new InvalidCommandException();
-//                                else {
-//                                    server.sendResult(new ResultAction(((CommandAction) command).id, Status.SUCCESS, new HashMap()));
-//                                    if (action instanceof AddFighter) {
-//                                        // Registering GameObject
-//                                        gameObjectIDs.add(((AddFighter) action).AI.id);
-//                                        server.id2client.put(((AddFighter) action).AI.id, server.id2client.get(((CommandAction) command).id));
-//                                    } else if (action instanceof Nothing) break;
-//                                }
-//                            } else throw new InvalidCommandException();
-//
-//                        } else throw new InvalidCommandException();
-//                    } catch (InvalidCommandException e) {
-//                        e.printStackTrace();
-//                        server.sendResult(new ResultAction(((CommandAction) command).id, Status.FAILURE, new HashMap()));
-//                        break;
-//                    }
-//                }
-//
-//                gameBoard.print();
-//            }
-//
-//            for (Long id : gameObjectIDs)
-//                queryGameObjectByID(id, new QueryAction(id, gameBoard));
-//
-//            for (Long dead : gameBoard.recentlyKilledIDs)
-//                gameObjectIDs.remove(dead);
-//        }
-//    }
 
     private void connectToClients() {
         server.connect();
@@ -250,53 +206,6 @@ public class ServerManager extends Thread {
 
         if (initError)
             Platform.exit(Platform.CLIENT_INITIALIZATION_ERROR);
-
-//
-//
-//        for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
-//            Command ci = server.accept();
-//            playerIDs.add(ci.id);
-//            if (ci instanceof CommandInitialize) {
-//                server.sendResult(new ResultInitialize(ci.id, Status.SUCCESS, new HashMap()));
-//            } else try {
-//                throw new InvalidCommandException();
-//            } catch (InvalidCommandException e) {
-//                e.printStackTrace();
-//                server.sendResult(new ResultInitialize(ci.id, Status.FAILURE, new HashMap()));
-//            }
-//            System.out.println(i + " th player joined with id: " + ci.id);
-//    }
-
     }
-//
-//    private void queryGameObjectByID(Long id, Query query) {
-//        if (gameBoard.getObjectByID(id) == null) return; //hamzaman dast nazanim !
-//
-//        gameBoard.setMyID(id);
-//        gameBoard.timePassedForCurrentPlayer();
-//        Command command = server.sendQuery(query);
-//        if (query instanceof QueryFinalize) {
-//            server.sendResult(new ResultAction(((CommandAction) command).id, Status.SUCCESS, new HashMap()));
-//            return;
-//        }
-//
-//        try {
-//            if (command instanceof CommandAction) {
-//                Action action = ((CommandAction) command).action;
-//                if (action.execute(gameBoard))
-//                    throw new InvalidCommandException();
-//                else {
-//                    server.sendResult(new ResultAction(((CommandAction) command).id, Status.SUCCESS, new HashMap()));
-//                    if (action instanceof Shoot) {
-//                        for (Long dead : gameBoard.recentlyKilledIDs)
-//                            queryGameObjectByID(dead, new QueryFinalize(dead, gameBoard));
-//                    }
-//                }
-//            } else
-//                throw new InvalidCommandException();
-//        } catch (InvalidCommandException e) {
-//            e.printStackTrace();
-//            server.sendResult(new ResultAction(((CommandAction) command).id, Status.FAILURE, new HashMap()));
-//        }
-//    }
+
 }

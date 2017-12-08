@@ -4,6 +4,9 @@ import ir.pint.soltoon.soltoongame.server.CoreGameBoard;
 import ir.pint.soltoon.soltoongame.shared.data.Fighter;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
 
+/**
+ *
+ */
 public final class AddFighter extends Action {
     private final Fighter AI;
     private final int x, y;
