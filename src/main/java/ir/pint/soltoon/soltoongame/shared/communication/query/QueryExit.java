@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.communication.query;
 
-import shared.data.map.GameBoard;
+import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
 
 public class QueryExit extends QueryAction {
     public QueryExit(Long id, GameBoard gameBoard) {

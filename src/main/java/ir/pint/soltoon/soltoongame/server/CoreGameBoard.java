@@ -1,14 +1,17 @@
 package ir.pint.soltoon.soltoongame.server;
 
-import shared.data.map.Cell;
-import shared.data.map.GameBoard;
-import shared.data.map.GameObject;
+import ir.pint.soltoon.soltoongame.shared.data.map.Cell;
+import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
+import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
+import ir.pint.soltoon.utils.shared.facades.json.SecureConvert;
 
 import java.util.ArrayList;
 
 /**
  * Created by amirkasra on 9/30/2017 AD.
  */
+
+@SecureConvert(GameBoard.class)
 public class CoreGameBoard extends GameBoard {
     public ArrayList<Long> recentlyKilledIDs;
 

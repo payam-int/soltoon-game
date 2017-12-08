@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.communication.query;
 
-import shared.communication.Message;
+import ir.pint.soltoon.soltoongame.shared.communication.Message;
 
 import java.io.Serializable;
 

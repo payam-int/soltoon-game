@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.communication.command;
 
-import shared.communication.Message;
+import ir.pint.soltoon.soltoongame.shared.communication.Message;
 
 /**
  * Created by amirkasra on 9/28/2017 AD.

@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.communication.result;
 
-import shared.communication.Message;
+import ir.pint.soltoon.soltoongame.shared.communication.Message;
 
 import java.util.HashMap;
 
@@ -15,5 +15,21 @@ public abstract class Result extends Message {
         super(id);
         this.data = data;
         this.status=status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public HashMap<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(HashMap<String, Object> data) {
+        this.data = data;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

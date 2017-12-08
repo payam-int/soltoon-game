@@ -1,10 +1,10 @@
 package ir.pint.soltoon.soltoongame.shared.data.action;
 
-import server.CoreGameBoard;
+import ir.pint.soltoon.soltoongame.server.CoreGameBoard;
 
 public final class Nothing extends Action{
     @Override
-    public boolean execute(CoreGameBoard gb) {
+    public boolean execute(CoreGameBoard gb, Object... extra) {
         return false;
     }
 }

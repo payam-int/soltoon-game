@@ -1,27 +1,31 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
+import ir.pint.soltoon.utils.shared.facades.json.Secure;
+
 /**
  * Created by amirkasra on 9/30/2017 AD.
  */
-public enum GameObjectType {
-    musketeer, bomber, giant
-    , tower, mortar, tesla, inferno;
+
+@Secure
+public enum FighterType {
+    MUSKETEER, BOMBER, GIANT
+    , TOWER, MORTAR, TESLA, INFERNO;
 
     public Integer getHP() {
         switch (this) {
-            case musketeer:
+            case MUSKETEER:
                 return 100;
-            case bomber:
+            case BOMBER:
                 return 50;
-            case giant:
+            case GIANT:
                 return 500;
-            case tower:
+            case TOWER:
                 return 2000;
-            case mortar:
+            case MORTAR:
                 return 300;
-            case tesla:
+            case TESLA:
                 return 300;
-            case inferno:
+            case INFERNO:
                 return 300;
         }
         return null;
@@ -29,19 +33,19 @@ public enum GameObjectType {
 
     public Integer getReloadingTime() {
         switch (this) {
-            case bomber:
+            case BOMBER:
                 return 1;
-            case giant:
+            case GIANT:
                 return 4;
-            case tower:
+            case TOWER:
                 return 1;
-            case musketeer:
+            case MUSKETEER:
                 return 2;
-            case mortar:
+            case MORTAR:
                 return 5;
-            case tesla:
+            case TESLA:
                 return 2;
-            case inferno:
+            case INFERNO:
                 return 0;
         }
         return null;
@@ -49,29 +53,30 @@ public enum GameObjectType {
 
     public Integer getRestingTime() {
         switch (this) {
-            case bomber:
+            case BOMBER:
                 return 0;
-            case giant:
+            case GIANT:
                 return 2;
-            case tower:
+            case TOWER:
                 return Integer.MAX_VALUE;
-            case musketeer:
+            case MUSKETEER:
                 return 1;
-            case mortar:
+            case MORTAR:
                 return Integer.MAX_VALUE;
-            case tesla:
+            case TESLA:
                 return Integer.MAX_VALUE;
-            case inferno:
+            case INFERNO:
                 return Integer.MAX_VALUE;
         }
         return null;
     }
 
     public GameObject getFactory(Long id) {
+
         switch (this) {
-            case musketeer:
+            case MUSKETEER:
                 return new Giant(id);
-            case tower:
+            case TOWER:
                 return new Tower(id);
         }
         return null;
@@ -79,19 +84,19 @@ public enum GameObjectType {
 
     public Integer getCost() {
         switch (this) {
-            case bomber:
+            case BOMBER:
                 return 10;
-            case giant:
+            case GIANT:
                 return 50;
-            case tower:
+            case TOWER:
                 return 1000;
-            case musketeer:
+            case MUSKETEER:
                 return 20;
-            case mortar:
+            case MORTAR:
                 return 200;
-            case tesla:
+            case TESLA:
                 return 150;
-            case inferno:
+            case INFERNO:
                 return 300;
         }
         return null;
@@ -99,19 +104,19 @@ public enum GameObjectType {
 
     public Integer getShootingRange() {
         switch (this) {
-            case musketeer:
+            case MUSKETEER:
                 return 5;
-            case bomber:
+            case BOMBER:
                 return 3;
-            case giant:
+            case GIANT:
                 return 2;
-            case tower:
+            case TOWER:
                 return 8;
-            case mortar:
+            case MORTAR:
                 return 6;
-            case tesla:
+            case TESLA:
                 return 4;
-            case inferno:
+            case INFERNO:
                 return 5;
         }
         return null;
@@ -119,9 +124,9 @@ public enum GameObjectType {
 
     public Integer getShootingPower() {
         switch (this) {
-            case tower:
+            case TOWER:
                return  50;
-            case musketeer:
+            case MUSKETEER:
                 return 5;
         }
         return null;

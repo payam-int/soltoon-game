@@ -7,4 +7,8 @@ public class ResultAction extends Result {
     public ResultAction(Long id, Status status, HashMap data) {
         super(id, status, data);
     }
+
+    public ResultAction(Long id, Status status) {
+        this(id, status, null);
+    }
 }

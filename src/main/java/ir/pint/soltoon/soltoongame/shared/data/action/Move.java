@@ -1,19 +1,19 @@
 package ir.pint.soltoon.soltoongame.shared.data.action;
 
-import server.CoreGameBoard;
-import shared.data.map.Cell;
-import shared.data.map.Direction;
-import shared.data.map.GameObject;
+import ir.pint.soltoon.soltoongame.server.CoreGameBoard;
+import ir.pint.soltoon.soltoongame.shared.data.map.Cell;
+import ir.pint.soltoon.soltoongame.shared.data.map.Direction;
+import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
 
 public final class Move extends Action {
-    public final Direction direction;
+    private final Direction direction;
 
     public Move(Direction direction) {
         this.direction = direction;
     }
 
     @Override
-    public boolean execute(CoreGameBoard gb) {
+    public boolean execute(CoreGameBoard gb, Object... extra) {
         GameObject o = gb.getObjectByID(gb.getMyID());
         if (o==null) return true; //age yevaght GameObject nabud
         if (o.getRemainingRestingTime()!=0) return true;
@@ -26,5 +26,9 @@ public final class Move extends Action {
 
         System.out.println(o.id + "-move-" + newCell.getX() + ","+ newCell.getY());
         return false;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }

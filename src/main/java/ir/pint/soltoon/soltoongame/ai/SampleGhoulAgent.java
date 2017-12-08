@@ -1,16 +1,16 @@
 package ir.pint.soltoon.soltoongame.ai;
 
-import shared.data.Fighter;
-import shared.data.action.Action;
-import shared.data.action.Move;
-import shared.data.action.Nothing;
-import shared.data.action.Shoot;
-import shared.data.map.*;
+import ir.pint.soltoon.soltoongame.shared.data.Fighter;
+import ir.pint.soltoon.soltoongame.shared.data.action.Action;
+import ir.pint.soltoon.soltoongame.shared.data.action.Move;
+import ir.pint.soltoon.soltoongame.shared.data.action.Nothing;
+import ir.pint.soltoon.soltoongame.shared.data.action.Shoot;
+import ir.pint.soltoon.soltoongame.shared.data.map.*;
 
 public class SampleGhoulAgent extends Fighter {
 
 
-	public SampleGhoulAgent(GameObjectType type) {
+	public SampleGhoulAgent(FighterType type) {
 		super(type);
 	}
 
@@ -26,7 +26,7 @@ public class SampleGhoulAgent extends Fighter {
 
 	@Override
 	public Action getAction(GameBoard gb) {
-		System.out.println(id);
+		System.out.println(getId());
 		Direction dir;
 		Cell cell;
 		Cell now = gb.getObjectByID(gb.getMyID()).getCell();
@@ -48,7 +48,7 @@ public class SampleGhoulAgent extends Fighter {
 		if (cell!=null && cell.gameObject ==null) return new Move(dir);
 
 		int x=gb.getWidth()-1, y=gb.getHeight()-1;
-		if (now.getDistance(gb.getCellByIndex(x,y))<=type.getShootingRange()) {
+		if (now.getDistance(gb.getCellByIndex(x,y))<=getType().getShootingRange()) {
 			System.out.println("shootidam");
 			return new Shoot(x, y);
 		}

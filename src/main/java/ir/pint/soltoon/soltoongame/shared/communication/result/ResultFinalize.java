@@ -9,4 +9,7 @@ public class ResultFinalize extends Result {
     public ResultFinalize(Long id, Status status, HashMap data) {
         super(id, status, data);
     }
+    public ResultFinalize(Long id, Status status) {
+        super(id, status, null);
+    }
 }
