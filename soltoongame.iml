@@ -11,15 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="Maven: ir.pint.soltoon:containers:1.1.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/containers-1.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" name="Maven: ir.pint.soltoon:containers:1.1.1" level="project" />
   </component>
 </module>
