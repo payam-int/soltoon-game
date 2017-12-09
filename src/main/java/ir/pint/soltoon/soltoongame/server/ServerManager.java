@@ -23,9 +23,9 @@ import java.util.*;
  */
 public class ServerManager extends Thread {
 
-    public final int NUMBER_OF_PLAYERS = 1;
-    public final int HEIGHT = 10, WIDTH = 10;
-    public final int ROUNDS = 50;
+    public final int NUMBER_OF_PLAYERS = GameConfiguration.NUMBER_OF_PLAYERS;
+    public final int HEIGHT = GameConfiguration.BOARD_HEIGHT, WIDTH = GameConfiguration.BOARD_WIDTH;
+    public final int ROUNDS = GameConfiguration.ROUNDS;
 
 
     private Server server;
