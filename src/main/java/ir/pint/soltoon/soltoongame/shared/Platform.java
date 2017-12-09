@@ -13,7 +13,9 @@ public class Platform {
     public static final int OK = 0;
 
     public static void exit(int i) {
-        ResultStorage.save();
+        ResultStorage.flush();
+
+
         System.exit(i);
     }
 }

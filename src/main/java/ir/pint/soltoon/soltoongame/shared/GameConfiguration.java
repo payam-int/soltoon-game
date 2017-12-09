@@ -1,5 +1,8 @@
 package ir.pint.soltoon.soltoongame.shared;
 
+import ir.pint.soltoon.utils.shared.comminucation.ComRemoteConfig;
+import ir.pint.soltoon.utils.shared.comminucation.ComRemoteInfo;
+
 public class GameConfiguration {
     public static double CONNECTION_COEFF = 1.3;
     public static double EXTRA_TIME_COEFF = 0.2;
@@ -17,4 +20,9 @@ public class GameConfiguration {
     public static int ROUNDS = 50;
     public static int BOARD_WIDTH = 10;
     public static int BOARD_HEIGHT = 10;
+
+
+    public static int DEFAULT_CLIENTS_COUNT = 1;
+    public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("127.0.0.1", 5566, "password");
+    public static ComRemoteConfig DEFAULT_REMOTE_CONFIG = new ComRemoteConfig("password", 5566);
 }

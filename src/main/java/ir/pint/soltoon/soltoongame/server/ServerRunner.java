@@ -1,5 +1,6 @@
 package ir.pint.soltoon.soltoongame.server;
 
+import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.Platform;
 import ir.pint.soltoon.utils.shared.comminucation.ComInputStream;
 import ir.pint.soltoon.utils.shared.comminucation.ComOutputStream;
@@ -13,16 +14,26 @@ import java.util.List;
 
 public class ServerRunner {
 
-    public static void main(String[] args) throws Exception {
+    public static void runContainer() {
         ArrayList<ComRemoteInfo> remotes = ComRemoteInfo.createFromEnv();
-        run(remotes);
+        run(remotes, ServerMode.CONTAINER);
     }
 
-    public static void run(ComRemoteInfo... remoteInfos) {
-        run(Arrays.asList(remoteInfos));
+    public static void run() {
+        GameConfiguration.NUMBER_OF_PLAYERS = GameConfiguration.DEFAULT_CLIENTS_COUNT;
+
+        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
+        ResultStorage.addResultHandler(javadTypeResultHandler);
+
+        run(GameConfiguration.DEFAULT_REMOTE_INFO, ServerMode.GUI);
+
     }
 
-    public static void run(List<ComRemoteInfo> remoteInfos) {
+    public static void run(ComRemoteInfo comRemoteInfo, ServerMode serverMode) {
+        run(Arrays.asList(comRemoteInfo), serverMode);
+    }
+
+    public static void run(List<ComRemoteInfo> remoteInfos, ServerMode serverMode) {
 
         // initiate communication between server and clients.
         ComServer comServer = ComServer.initiate(remoteInfos);
