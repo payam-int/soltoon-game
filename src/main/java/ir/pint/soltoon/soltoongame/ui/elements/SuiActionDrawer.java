@@ -40,10 +40,8 @@ public class SuiActionDrawer extends JComponent {
             g2d.setStroke(SHOOT_STROKE);
             g2d.setColor(new Color(20, 20, 20, 96));
             g2d.drawLine(getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
-            System.out.println("213123" + getCellXShoot(currentAction.getX()));
             g2d.setColor(Color.decode("#C6574F"));
             g2d.fillOval(getCellXShoot(((SuiActionShoot) currentAction).getToX()) - 5, getCellYShoot(((SuiActionShoot) currentAction).getToY()) - 5, 12, 12);
-            System.out.printf("%d,%d,%d,%d\n", getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
 
         } else if (currentAction instanceof SuiActionMove) {
             SuiActionMove e = (SuiActionMove) this.currentAction;

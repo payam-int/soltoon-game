@@ -4,17 +4,15 @@ import ir.pint.soltoon.soltoongame.ui.SuiManager;
 
 public class SuiActionShoot extends SuiAction {
     private int toX, toY;
-    private int damage;
     private boolean died = false;
 
     public SuiActionShoot() {
     }
 
-    public SuiActionShoot(int x, int y, Long player, int toX, int toY, int damage) {
+    public SuiActionShoot(int x, int y, Long player, int toX, int toY) {
         super(x, y, player);
         this.toX = toX;
         this.toY = toY;
-        this.damage = damage;
     }
 
     public int getToX() {
@@ -33,14 +31,6 @@ public class SuiActionShoot extends SuiAction {
         this.toY = toY;
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
     public boolean isDied() {
         return died;
     }
@@ -54,7 +44,6 @@ public class SuiActionShoot extends SuiAction {
         return "SuiActionShoot{" +
                 "toX=" + toX +
                 ", toY=" + toY +
-                ", damage=" + damage +
                 ", died=" + died +
                 ", x=" + x +
                 ", y=" + y +
@@ -64,6 +53,11 @@ public class SuiActionShoot extends SuiAction {
 
     @Override
     public void apply(SuiManager suiManager) {
+
+    }
+
+    @Override
+    public void revert(SuiManager suiManager) {
 
     }
 }

@@ -5,9 +5,7 @@ import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.data.Fighter;
 import ir.pint.soltoon.soltoongame.shared.data.map.FighterType;
 import ir.pint.soltoon.soltoongame.shared.result.*;
-import ir.pint.soltoon.soltoongame.ui.actions.SuiActionAdd;
-import ir.pint.soltoon.soltoongame.ui.actions.SuiActionMove;
-import ir.pint.soltoon.soltoongame.ui.actions.SuiActionShoot;
+import ir.pint.soltoon.soltoongame.ui.actions.*;
 import ir.pint.soltoon.soltoongame.ui.elements.SuiFighter;
 import ir.pint.soltoon.soltoongame.ui.elements.SuiPlayer;
 import ir.pint.soltoon.utils.shared.facades.result.EventLog;
@@ -43,7 +41,7 @@ public class SuiResultPipe implements ResultHandler {
             } else if (eventLog instanceof AgentAddEvent) {
                 AgentAddEvent e = (AgentAddEvent) eventLog;
 
-                SuiFighter suiFighter = new SuiFighter(FighterUI.get(e.getAgentType()), e.getX(), e.getY(), e.getAgent(), e.getPlayer());
+                SuiFighter suiFighter = new SuiFighter(FighterUI.get(e.getAgentType()), e.getX(), e.getY(), e.getAgent(), e.getPlayer(), e.getHp());
                 suiManager.addFighter(suiFighter);
 
                 SuiActionAdd suiActionAdd = new SuiActionAdd(e.getX(), e.getY(), e.getAgent(), e.getPlayer());
@@ -56,10 +54,16 @@ public class SuiResultPipe implements ResultHandler {
             } else if (eventLog instanceof AgentShootEvent) {
                 AgentShootEvent e = (AgentShootEvent) eventLog;
 
-                SuiActionShoot suiActionShoot = new SuiActionShoot(e.getX(), e.getY(), e.getPlayer(), e.getTargetX(), e.getTargetY(), 100);
+                SuiActionShoot suiActionShoot = new SuiActionShoot(e.getX(), e.getY(), e.getPlayer(), e.getTargetX(), e.getTargetY());
                 suiManager.addAction(suiActionShoot);
-            } else {
-                System.out.println("but" + eventLog.getClass());
+            } else if (eventLog instanceof AgentDiedEvent) {
+                AgentDiedEvent e = (AgentDiedEvent) eventLog;
+                SuiActionDie suiActionDie = new SuiActionDie(e.getAgent(), e.getPlayer(), e.getPenalty(), e.getX(), e.getY());
+                suiManager.addAction(suiActionDie);
+            } else if (eventLog instanceof AgentDamagedEvent) {
+                AgentDamagedEvent e = (AgentDamagedEvent) eventLog;
+                SuiActionDamage suiActionDamage = new SuiActionDamage(e.getX(), e.getY(), e.getPlayer(), e.getAgent(), e.getDamage());
+                suiManager.addAction(suiActionDamage);
             }
 //            else if (eventLog instanceof AgentAddEvent) {
 //                SuiActionAdd suiActionAdd = new SuiActionAdd(((AgentAddEvent) eventLog).getX(), ((AgentAddEvent) eventLog).getY(), ((AgentAddEvent) eventLog).getAgent(), ((AgentAddEvent) eventLog).getPlayer());
@@ -91,7 +95,6 @@ public class SuiResultPipe implements ResultHandler {
     @Override
     public void putMisc(String s, Object o) {
         SuiConfiguration suiConfiguration = suiManager.getSuiConfiguration();
-        System.out.println(s);
         if (s.equals("mapWidth")) {
             suiConfiguration.setBoardWidth(((int) o));
             mapDependencies.decrementAndGet();

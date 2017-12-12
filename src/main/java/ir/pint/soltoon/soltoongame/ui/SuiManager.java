@@ -39,6 +39,8 @@ public class SuiManager {
 
     public synchronized void addPlayer(SuiPlayer suiPlayer) {
         players.put(suiPlayer.getId(), suiPlayer);
+
+
     }
 
     public synchronized void addFighter(SuiFighter fighter) {
@@ -121,8 +123,18 @@ public class SuiManager {
     }
 
 
-    public void previusAction() {
+    public void previousAction() {
+        if (currentAction == null)
+            return;
 
+        currentAction.revert(this);
+
+        nextActions.addFirst(currentAction);
+
+        SuiAction suiAction = previousActions.pollLast();
+        currentAction = suiAction;
+        actionDrawer.setCurrentAction(currentAction);
+        repaintAll();
     }
 
     private void repaintAll() {
@@ -147,5 +159,13 @@ public class SuiManager {
 
     public SuiFighter getFighter(Long fighter) {
         return fighters.getOrDefault(fighter, null);
+    }
+
+    public Map<Long, SuiPlayer> getPlayers() {
+        return players;
+    }
+
+    public SuiPlayer getPlayer(Long player) {
+        return this.players.getOrDefault(player, null);
     }
 }

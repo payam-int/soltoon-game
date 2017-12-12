@@ -71,7 +71,7 @@ public class CoreGameBoard extends GameBoard {
             recentlyKilledIDs.add(o.id);
             return o;
         } else {
-            ResultStorage.addEvent(new AgentDamagedEvent(o.getId(), playerByFighter.get(o.getId()), getMyID(), amount, o.getHp()));
+            ResultStorage.addEvent(new AgentDamagedEvent(o.getId(), playerByFighter.get(o.getId()), getMyID(), amount, o.getHp(), o.getCell().getX(), o.getCell().getY()));
         }
         return null;
     }

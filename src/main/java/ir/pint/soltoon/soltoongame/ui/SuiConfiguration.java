@@ -17,6 +17,9 @@ public class SuiConfiguration {
     public static int CELL_SIZE = 70;
     public static final LinkedList<Color> palleteColors = new LinkedList<Color>();
     public static Font font;
+    public static Font TITLE_FONT;
+    public static Font HEAD_FONT;
+    public static Font TEXT_FONT;
 
     static {
         try {
@@ -28,6 +31,10 @@ public class SuiConfiguration {
             e.printStackTrace();
         }
 
+        HEAD_FONT = new Font("Lora", Font.BOLD, 18);
+        TEXT_FONT = new Font("Lora", Font.PLAIN, 12);
+        TITLE_FONT = new Font("Lora", Font.BOLD, 22);
+
     }
 
 
@@ -36,7 +43,10 @@ public class SuiConfiguration {
     private int rounds, players;
     private double screenSizeWidth, screenSizeHeight;
 
-    private boolean initiated = false;
+    private volatile boolean initiated = false;
+    private volatile boolean play = true;
+
+//    private volatile
 
 
     private Map<Long, Color> playerColors = new ConcurrentHashMap<>();
@@ -146,6 +156,14 @@ public class SuiConfiguration {
 
     public int getBoardHeight() {
         return boardHeight;
+    }
+
+    public boolean isPlay() {
+        return play;
+    }
+
+    public void setPlay(boolean play) {
+        this.play = play;
     }
 
     @Override

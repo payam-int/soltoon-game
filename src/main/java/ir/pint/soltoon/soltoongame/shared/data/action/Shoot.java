@@ -23,8 +23,6 @@ public final class Shoot extends Action {
         if (target == null) return true;
         if (target.getDistance(o.getCell()) > type.getShootingRange()) return true;
         o.resetReloadingTime();
-//        System.out.println(o.id + "-shoot-" + x + "," + y);
-
         Long player = gb.getPlayerByFighter().get(gb.getMyID());
 
         ResultStorage.addEvent(new AgentShootEvent(gb.getMyID(), player, o.getCell().getX(), o.getCell().getY(), x, y));

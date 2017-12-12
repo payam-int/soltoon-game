@@ -40,4 +40,6 @@ public abstract class SuiAction {
     }
 
     public abstract void apply(SuiManager suiManager);
+
+    public abstract void revert(SuiManager suiManager);
 }

@@ -26,12 +26,13 @@ public class SuiFighter extends JComponent {
     private int reloadingTime = 2;
 
 
-    public SuiFighter(FighterUI fighterUI, int boardX, int boardY, long id, long player) {
+    public SuiFighter(FighterUI fighterUI, int boardX, int boardY, long id, long player, int hp) {
         this.fighterUI = fighterUI;
         this.boardX = boardX;
         this.boardY = boardY;
         this.id = id;
         this.player = player;
+        this.hp = hp;
     }
 
 
@@ -58,10 +59,6 @@ public class SuiFighter extends JComponent {
             graphics.clearRect(0, 0, getWidth(), getHeight());
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
-
-            System.out.println("Repainting FIghter");
-
-            System.out.println(getBounds());
 
             graphics.drawImage(image.getScaledInstance(getImageSize(), getImageSize(), Image.SCALE_SMOOTH), getImageX(), getImageY(), getImageSize(), getImageSize(), null);
 

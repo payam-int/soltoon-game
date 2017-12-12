@@ -2,17 +2,20 @@ package ir.pint.soltoon.soltoongame.ui.actions;
 
 import ir.pint.soltoon.soltoongame.ui.SuiManager;
 import ir.pint.soltoon.soltoongame.ui.elements.SuiFighter;
-import ir.pint.soltoon.soltoongame.ui.elements.SuiGameBoard;
 
-public class SuiActionAdd extends SuiAction {
+public class SuiActionDamage extends SuiAction {
     private Long id;
+    private int damage;
 
-    public SuiActionAdd() {
+    public SuiActionDamage(Long id, int damage) {
+        this.id = id;
+        this.damage = damage;
     }
 
-    public SuiActionAdd(int x, int y, Long id, Long player) {
+    public SuiActionDamage(int x, int y, Long player, Long id, int damage) {
         super(x, y, player);
         this.id = id;
+        this.damage = damage;
     }
 
     public Long getId() {
@@ -23,19 +26,23 @@ public class SuiActionAdd extends SuiAction {
         this.id = id;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     @Override
     public void apply(SuiManager suiManager) {
         SuiFighter fighter = suiManager.getFighter(id);
-        SuiGameBoard gameBoard = suiManager.getGameBoard();
-        fighter.setSuiManager(suiManager);
-        fighter.rebound();
-        gameBoard.add(fighter);
+        fighter.setHp(fighter.getHp() - damage);
     }
 
     @Override
     public void revert(SuiManager suiManager) {
-        SuiGameBoard gameBoard = suiManager.getGameBoard();
         SuiFighter fighter = suiManager.getFighter(id);
-        gameBoard.remove(fighter);
+        fighter.setHp(fighter.getHp() + damage);
     }
 }

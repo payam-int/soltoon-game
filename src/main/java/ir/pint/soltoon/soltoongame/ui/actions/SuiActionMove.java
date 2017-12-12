@@ -50,7 +50,13 @@ public class SuiActionMove extends SuiAction {
         fighter.setBoardX(toX);
         fighter.setBoardY(toY);
         fighter.rebound();
+    }
 
-        System.out.println(fighter.getBounds());
+    @Override
+    public void revert(SuiManager suiManager) {
+        SuiFighter fighter = suiManager.getFighter(this.fighter);
+        fighter.setBoardX(x);
+        fighter.setBoardY(y);
+        fighter.rebound();
     }
 }

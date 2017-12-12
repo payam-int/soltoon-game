@@ -7,13 +7,20 @@ public class AgentDamagedEvent extends Event {
     private int damage;
     private int finalHp;
 
-    public AgentDamagedEvent(long agent, long player, long attacker, int damage, int finalHp) {
+    private int x;
+    private int y;
+
+
+
+    public AgentDamagedEvent(long agent, long player, long attacker, int damage, int finalHp, int x, int y) {
         super(EventType.AGENT_DAMAGED);
         this.agent = agent;
         this.player = player;
         this.attacker = attacker;
         this.damage = damage;
         this.finalHp = finalHp;
+        this.x = x;
+        this.y = y;
     }
 
     public long getAgent() {
@@ -55,5 +62,13 @@ public class AgentDamagedEvent extends Event {
 
     public void setFinalHp(int finalHp) {
         this.finalHp = finalHp;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

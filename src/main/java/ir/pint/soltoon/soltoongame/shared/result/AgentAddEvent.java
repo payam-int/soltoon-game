@@ -58,4 +58,8 @@ public class AgentAddEvent extends Event {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getHp() {
+        return hp;
+    }
 }

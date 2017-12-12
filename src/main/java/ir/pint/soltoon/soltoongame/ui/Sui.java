@@ -27,10 +27,11 @@ public class Sui extends Thread {
     @Override
     public void run() {
 
-        while (true){
+        while (true) {
             try {
                 Thread.sleep(500);
-                suiManager.nextAction();
+                if (suiManager.getSuiConfiguration().isPlay())
+                    suiManager.nextAction();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

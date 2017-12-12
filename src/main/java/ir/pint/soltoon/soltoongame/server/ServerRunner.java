@@ -54,7 +54,7 @@ public class ServerRunner {
             GUIRunner.openGUI();
         }
 
-        // create comminucation wrapper
+        // CREATE comminucation wrapper
         Server server = new Server(comServer);
 
         // start judge

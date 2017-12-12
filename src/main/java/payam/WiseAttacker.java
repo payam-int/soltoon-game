@@ -25,6 +25,6 @@ public class WiseAttacker extends Fighter {
 
     @Override
     public Action getAction(GameBoard gb) {
-        return Math.random() < 0.5 ? new Shoot(1, 1) : new Move(Direction.up);
+        return Math.random() < 0.5 ? new Shoot(0, 1) : new Move(Direction.up);
     }
 }

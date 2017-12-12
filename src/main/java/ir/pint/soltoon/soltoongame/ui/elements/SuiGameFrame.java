@@ -25,6 +25,7 @@ public class SuiGameFrame extends JFrame {
 
         setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void readyForGame() {
