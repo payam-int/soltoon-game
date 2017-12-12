@@ -10,6 +10,7 @@ import ir.pint.soltoon.utils.shared.comminucation.ComServer;
 import ir.pint.soltoon.utils.shared.comminucation.Comminucation;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 import ir.pint.soltoon.utils.shared.facades.uuid.UUID;
+import sun.reflect.annotation.ExceptionProxy;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -29,18 +30,30 @@ public class Server {
     }
 
     public void connect() {
-        if (!this.comServer.connectAll(true)) {
-            Platform.exit(Platform.CONNECTION_ERROR);
+        try {
+            if (!this.comServer.connectAll(true)) {
+                System.out.println("exxxxxxxxxxxxxx");
+                Platform.exit(Platform.CONNECTION_ERROR);
+            }
+
+        } catch (Exception e){
+
         }
 
         this.comminucations = this.comServer.getComminucations();
 
         // assign id to clients
-        for (ComRemoteInfo remoteInfo : this.comminucations.keySet()) {
-            long client = UUID.getLong();
-            clients.put(client, this.comminucations.get(remoteInfo));
+        try {
 
-            ResultStorage.addEvent(new PlayerJoin(client, remoteInfo));
+            for (ComRemoteInfo remoteInfo : this.comminucations.keySet()) {
+                long client = UUID.getLong();
+                clients.put(client, this.comminucations.get(remoteInfo));
+
+                PlayerJoin playerJoin = new PlayerJoin(client, remoteInfo);
+                ResultStorage.addEvent(playerJoin);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

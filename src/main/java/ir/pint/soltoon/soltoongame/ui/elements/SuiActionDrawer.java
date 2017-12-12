@@ -1,0 +1,98 @@
+package ir.pint.soltoon.soltoongame.ui.elements;
+
+import ir.pint.soltoon.soltoongame.ui.SuiConfiguration;
+import ir.pint.soltoon.soltoongame.ui.SuiManager;
+import ir.pint.soltoon.soltoongame.ui.actions.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SuiActionDrawer extends JComponent {
+    private SuiManager suiManager;
+    private SuiAction currentAction;
+
+
+    private static final Stroke ADD_STROKE = new BasicStroke(6.0f, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 15.0f, new float[]{15.0f}, 5.0f);
+    private static final Stroke SHOOT_STROKE = new BasicStroke(6.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_SQUARE, 10.0f, new float[]{10.0f}, 1.0f);
+
+    public SuiActionDrawer(SuiManager suiManager) {
+        this.suiManager = suiManager;
+
+        setBounds(0, 0, suiManager.getSuiConfiguration().getMapWidth(), suiManager.getSuiConfiguration().getMapHeight());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int cellSize = suiManager.getSuiConfiguration().getCellSize();
+
+        if (currentAction instanceof SuiActionAdd) {
+            g2d.setStroke(ADD_STROKE);
+            Color decode = Color.decode("#444444");
+            g2d.setColor(decode.brighter());
+            g2d.drawOval(getCellX(currentAction.getX()), getCellY(currentAction.getY()), cellSize, cellSize);
+        } else if (currentAction instanceof SuiActionShoot) {
+            g2d.setStroke(SHOOT_STROKE);
+            g2d.setColor(new Color(20, 20, 20, 96));
+            g2d.drawLine(getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
+            System.out.println("213123" + getCellXShoot(currentAction.getX()));
+            g2d.setColor(Color.decode("#C6574F"));
+            g2d.fillOval(getCellXShoot(((SuiActionShoot) currentAction).getToX()) - 5, getCellYShoot(((SuiActionShoot) currentAction).getToY()) - 5, 12, 12);
+            System.out.printf("%d,%d,%d,%d\n", getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
+
+        } else if (currentAction instanceof SuiActionMove) {
+            SuiActionMove e = (SuiActionMove) this.currentAction;
+            g2d.setStroke(SHOOT_STROKE);
+            g2d.setColor(Color.decode("#444444").brighter());
+
+            int xAdd = e.getToX() == e.getX() ? 0 : cellSize / -2;
+            int yAdd = e.getToY() == e.getY() ? 0 : cellSize / -2;
+
+            g2d.drawLine(getCellXMove(e.getX()), getCellYMove(e.getY()), getCellXMove(e.getToX()) + xAdd, getCellYMove(e.getToY()) + yAdd);
+            g2d.setColor(Color.decode("#444444"));
+            g2d.fillOval(getCellXMove(e.getToX()) - 5 + xAdd, getCellYMove(e.getToY()) - 5 + yAdd, 12, 12);
+        } else if (currentAction instanceof SuiActionDie) {
+            g2d.setColor(new Color(255, 30, 0, 10));
+            g2d.fillRect(getCellX(currentAction.getX()), getCellY(currentAction.getY()), cellSize, cellSize);
+        }
+
+    }
+
+    private int getCellYShoot(int y) {
+        return getCellY(y) + getCellSize() / 2;
+    }
+
+    private int getCellSize() {
+        return suiManager.getSuiConfiguration().getCellSize();
+    }
+
+    private int getCellXShoot(int x) {
+        return (int) (getCellX(x) + getCellSize() / 2);
+    }
+
+
+    private int getCellXMove(int x) {
+        return getCellX(x) + getCellSize() / 2;
+    }
+
+    private int getCellYMove(int y) {
+        return getCellY(y) + getCellSize() / 2;
+    }
+
+    private int getCellY(int y) {
+        return y * getCellSize();
+    }
+
+    private int getCellX(int x) {
+        return x * getCellSize();
+    }
+
+    public void setCurrentAction(SuiAction currentAction) {
+        this.currentAction = currentAction;
+    }
+}

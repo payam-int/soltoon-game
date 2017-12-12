@@ -2,6 +2,7 @@ package ir.pint.soltoon.soltoongame.server;
 
 import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.Platform;
+import ir.pint.soltoon.soltoongame.ui.GUIRunner;
 import ir.pint.soltoon.utils.shared.comminucation.ComInputStream;
 import ir.pint.soltoon.utils.shared.comminucation.ComOutputStream;
 import ir.pint.soltoon.utils.shared.comminucation.ComRemoteInfo;
@@ -29,15 +30,29 @@ public class ServerRunner {
 
     }
 
+    public static void runTwoPlayers() {
+        GameConfiguration.NUMBER_OF_PLAYERS = 2;
+
+        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
+        ResultStorage.addResultHandler(javadTypeResultHandler);
+
+
+        run(Arrays.asList(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.DEFAULT_REMOTE_INFO2), ServerMode.GUI);
+
+    }
+
     public static void run(ComRemoteInfo comRemoteInfo, ServerMode serverMode) {
         run(Arrays.asList(comRemoteInfo), serverMode);
     }
 
     public static void run(List<ComRemoteInfo> remoteInfos, ServerMode serverMode) {
 
-        // initiate communication between server and clients.
+        // rebound communication between server and clients.
         ComServer comServer = ComServer.initiate(remoteInfos);
 
+        if (serverMode == ServerMode.GUI) {
+            GUIRunner.openGUI();
+        }
 
         // create comminucation wrapper
         Server server = new Server(comServer);

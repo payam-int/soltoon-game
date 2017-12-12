@@ -13,6 +13,9 @@ import ir.pint.soltoon.soltoongame.shared.communication.query.QueryInitialize;
 import ir.pint.soltoon.soltoongame.shared.communication.result.*;
 import ir.pint.soltoon.soltoongame.shared.data.action.*;
 import ir.pint.soltoon.soltoongame.shared.exceptions.ClientInitializationException;
+import ir.pint.soltoon.soltoongame.shared.result.EventType;
+import ir.pint.soltoon.soltoongame.shared.result.GameEndedEvent;
+import ir.pint.soltoon.soltoongame.shared.result.RoundStartEvent;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 import ir.pint.soltoon.utils.shared.facades.uuid.UUID;
 
@@ -43,10 +46,21 @@ public class ServerManager extends Thread {
     @Override
     public void run() {
         connectToClients();
+
+//        ResultStorage.addEvent(new );
+
+        ResultStorage.putMisc("rounds", ROUNDS);
+        ResultStorage.putMisc("mapWidth", WIDTH);
+        ResultStorage.putMisc("mapHeight", HEIGHT);
+        ResultStorage.putMisc("players", NUMBER_OF_PLAYERS);
+
         for (int round = 0; round < ROUNDS; round++) {
             gameBoard.setRound(round);
+            ResultStorage.addEvent(new RoundStartEvent(round));
             doRound();
         }
+
+        ResultStorage.addEvent(new GameEndedEvent());
 
         sendExitSignal();
 
@@ -63,7 +77,6 @@ public class ServerManager extends Thread {
     }
 
     private void doRound() {
-
         queryPlayers();
         queryFighters();
         removeKilledFighters();

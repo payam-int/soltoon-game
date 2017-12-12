@@ -23,6 +23,8 @@ public class GameConfiguration {
 
 
     public static int DEFAULT_CLIENTS_COUNT = 1;
-    public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("127.0.0.1", 5566, "password");
-    public static ComRemoteConfig DEFAULT_REMOTE_CONFIG = new ComRemoteConfig("password", 5566);
+    public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("127.0.0.1", 5566, "password1");
+    public static ComRemoteInfo DEFAULT_REMOTE_INFO2 = new ComRemoteInfo("127.0.0.1", 5567, "password2");
+    public static ComRemoteConfig DEFAULT_REMOTE_CONFIG = new ComRemoteConfig("password1", 5566);
+    public static ComRemoteConfig DEFAULT_REMOTE_CONFIG2 = new ComRemoteConfig("password2", 5567);
 }

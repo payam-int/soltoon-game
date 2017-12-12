@@ -1,12 +1,12 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
-import ir.pint.soltoon.utils.shared.facades.json.Secure;
+
 
 /**
  * Created by amirkasra on 9/30/2017 AD.
  */
 
-@Secure
+
 public enum FighterType {
     MUSKETEER, BOMBER, GIANT
     , TOWER, MORTAR, TESLA, INFERNO;

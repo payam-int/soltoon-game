@@ -5,7 +5,7 @@ import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDamagedEvent;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDiedEvent;
-import ir.pint.soltoon.utils.shared.facades.json.SecureConvert;
+import ir.pint.soltoon.utils.shared.facades.json.SerializeAs;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by amirkasra on 9/30/2017 AD.
  */
 
-@SecureConvert(GameBoard.class)
+@SerializeAs(GameBoard.class)
 public class CoreGameBoard extends GameBoard {
     public transient ArrayList<Long> recentlyKilledIDs;
     private transient Map<Long, Long> playerByFighter;

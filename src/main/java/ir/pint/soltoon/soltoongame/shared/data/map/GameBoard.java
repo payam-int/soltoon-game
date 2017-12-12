@@ -1,11 +1,10 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
-import ir.pint.soltoon.utils.shared.facades.json.Secure;
+
 
 import java.io.Serializable;
 import java.util.*;
 
-@Secure
 public class GameBoard {
     private Cell[][] cells;
     protected int height, width;

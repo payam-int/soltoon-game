@@ -2,12 +2,10 @@ package ir.pint.soltoon.soltoongame.shared.data.map;
 
 import ir.pint.soltoon.soltoongame.shared.result.AgentDamagedEvent;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDiedEvent;
-import ir.pint.soltoon.utils.shared.facades.json.Secure;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 
 import java.io.Serializable;
 
-@Secure
 public abstract class GameObject implements Serializable {
     public final Long id;
     private transient Cell cell = null;
@@ -37,7 +35,8 @@ public abstract class GameObject implements Serializable {
     }
 
     public void remainingRestingTimeMM() {
-        remainingRestingTime--;
+        if (remainingRestingTime != Integer.MAX_VALUE)
+            remainingRestingTime--;
         if (remainingRestingTime < 0) remainingRestingTime = 0;
     }
 
@@ -73,7 +72,6 @@ public abstract class GameObject implements Serializable {
     public boolean damageBy(int amount) {
         if (amount < 0) return false;
         hp -= amount;
-
 
 
         return hp <= 0;
