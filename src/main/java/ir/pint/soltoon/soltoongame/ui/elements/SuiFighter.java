@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.ui.elements;
 
-import ir.pint.soltoon.soltoongame.FighterUI;
+import ir.pint.soltoon.soltoongame.ui.SuiFighterType;
 import ir.pint.soltoon.soltoongame.ui.SuiManager;
 
 import javax.imageio.ImageIO;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class SuiFighter extends JComponent {
-    private FighterUI fighterUI;
+    private SuiFighterType fighterUI;
     private SuiManager suiManager;
     private BufferedImage image = null;
 
@@ -26,7 +26,7 @@ public class SuiFighter extends JComponent {
     private int reloadingTime = 2;
 
 
-    public SuiFighter(FighterUI fighterUI, int boardX, int boardY, long id, long player, int hp) {
+    public SuiFighter(SuiFighterType fighterUI, int boardX, int boardY, long id, long player, int hp) {
         this.fighterUI = fighterUI;
         this.boardX = boardX;
         this.boardY = boardY;
@@ -60,17 +60,27 @@ public class SuiFighter extends JComponent {
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
+
             graphics.drawImage(image.getScaledInstance(getImageSize(), getImageSize(), Image.SCALE_SMOOTH), getImageX(), getImageY(), getImageSize(), getImageSize(), null);
 
-            graphics.setColor(Color.decode("#F97063"));
-            graphics.fillRect(0, getHeight() - 7, ((int) (getWidth() * getRestingTimePercentage())), 3);
+//            graphics.setColor(Color.decode("#F97063"));
+//            graphics.fillRect(0, getHeight() - 7, ((int) (getWidth() * getRestingTimePercentage())), 3);
+//
+//            graphics.setColor(Color.decode("#F8C36C"));
+//            graphics.fillRect(0, getHeight() - 4, (int) (getWidth() * getReloadingTimePrecentage()), 3);
 
-            graphics.setColor(Color.decode("#F8C36C"));
-            graphics.fillRect(0, getHeight() - 4, (int) (getWidth() * getReloadingTimePrecentage()), 3);
 
-            graphics.setFont(new Font("Lora", Font.PLAIN, 15));
-            graphics.setColor(Color.BLACK);
-            graphics.drawString(hp + "", ((int) (getWidth() * 0.05)), 13 + ((int) (getHeight() * 0.05)));
+            if (getWidth() < 50) {
+                graphics.setColor(suiManager.getSuiConfiguration().getPlayerColor(player));
+                graphics.fillRect(0, getHeight() - 2, getWidth(), 2);
+            } else {
+                graphics.setFont(new Font("Lora", Font.PLAIN, 12));
+                graphics.setColor(Color.BLACK);
+                graphics.drawString(hp + "", ((int) (getWidth() * 0.05)), 10 + ((int) (getHeight() * 0.05)));
+
+                graphics.setColor(suiManager.getSuiConfiguration().getPlayerColor(player));
+                graphics.fillOval(getWidth() - 12, 2, 10, 10);
+            }
         }
     }
 

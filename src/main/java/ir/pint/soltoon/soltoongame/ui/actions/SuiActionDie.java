@@ -35,6 +35,12 @@ public class SuiActionDie extends SuiAction {
 
     @Override
     public void revert(SuiManager suiManager) {
+        SuiFighter fighter = suiManager.getFighter(id);
 
+        if (fighter != null) {
+            suiManager.getGameBoard().add(fighter);
+            SuiPlayer suiPlayer = suiManager.getPlayer(player);
+            suiPlayer.addScore(penalty);
+        }
     }
 }

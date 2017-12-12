@@ -8,8 +8,10 @@ public class AgentAddEvent extends Event {
     private int hp;
     private int x, y;
     private long player;
+    private int score;
+    private int cost;
 
-    public AgentAddEvent(long agent, int x, int y, FighterType agentType, int hp, long player) {
+    public AgentAddEvent(long agent, int x, int y, FighterType agentType, int hp, long player, int score, int cost) {
         super(EventType.AGENT_ADD);
         this.agent = agent;
         this.x = x;
@@ -17,6 +19,8 @@ public class AgentAddEvent extends Event {
         this.agentType = agentType;
         this.player = player;
         this.hp = hp;
+        this.score = score;
+        this.cost = cost;
     }
 
     public long getAgent() {
@@ -61,5 +65,13 @@ public class AgentAddEvent extends Event {
 
     public int getHp() {
         return hp;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

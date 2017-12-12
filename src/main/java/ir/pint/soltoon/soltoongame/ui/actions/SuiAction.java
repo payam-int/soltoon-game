@@ -2,7 +2,7 @@ package ir.pint.soltoon.soltoongame.ui.actions;
 
 import ir.pint.soltoon.soltoongame.ui.SuiManager;
 
-public abstract class SuiAction {
+public abstract class SuiAction implements SuiStep {
     protected int x, y;
     protected Long player;
 
@@ -38,8 +38,4 @@ public abstract class SuiAction {
     public void setPlayer(Long player) {
         this.player = player;
     }
-
-    public abstract void apply(SuiManager suiManager);
-
-    public abstract void revert(SuiManager suiManager);
 }

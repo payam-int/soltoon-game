@@ -1,7 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
 
-
 import java.io.Serializable;
 
 public final class Cell implements Serializable {
@@ -54,8 +53,16 @@ public final class Cell implements Serializable {
     @Override
     public String toString() {
         if (gameObject instanceof Giant) return "G";
-        if (gameObject instanceof Tower) return "T";
+        if (gameObject instanceof Castle) return "T";
         return ".";
+    }
+
+
+    public static void giveCellToObject(Cell cell, GameObject o) {
+        if (o.getCell() != null)
+            o.getCell().setGameObject(null);
+        cell.setGameObject(o);
+        o.setCell(cell);
     }
 }
 

@@ -15,7 +15,9 @@ public class SuiActionDrawer extends JComponent {
 
 
     private static final Stroke ADD_STROKE = new BasicStroke(6.0f, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 15.0f, new float[]{15.0f}, 5.0f);
+    private static final Stroke ADD_STROKE_TINY = new BasicStroke(2.0f, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 5.0f, new float[]{5.0f}, 2.0f);
     private static final Stroke SHOOT_STROKE = new BasicStroke(6.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_SQUARE, 10.0f, new float[]{10.0f}, 1.0f);
+    private static final Stroke SHOOT_STROKE_TINY = new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_SQUARE, 5.0f, new float[]{5.0f}, 2.0f);
 
     public SuiActionDrawer(SuiManager suiManager) {
         this.suiManager = suiManager;
@@ -25,6 +27,9 @@ public class SuiActionDrawer extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        if (suiManager.getSuiConfiguration().isFinalSceneOnly())
+            return;
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -32,12 +37,20 @@ public class SuiActionDrawer extends JComponent {
         int cellSize = suiManager.getSuiConfiguration().getCellSize();
 
         if (currentAction instanceof SuiActionAdd) {
-            g2d.setStroke(ADD_STROKE);
+            if (cellSize < 50)
+                g2d.setStroke(ADD_STROKE_TINY);
+            else
+                g2d.setStroke(ADD_STROKE);
             Color decode = Color.decode("#444444");
             g2d.setColor(decode.brighter());
             g2d.drawOval(getCellX(currentAction.getX()), getCellY(currentAction.getY()), cellSize, cellSize);
         } else if (currentAction instanceof SuiActionShoot) {
-            g2d.setStroke(SHOOT_STROKE);
+
+            if (cellSize < 50)
+                g2d.setStroke(SHOOT_STROKE_TINY);
+            else
+                g2d.setStroke(SHOOT_STROKE);
+
             g2d.setColor(new Color(20, 20, 20, 96));
             g2d.drawLine(getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
             g2d.setColor(Color.decode("#C6574F"));
@@ -45,7 +58,11 @@ public class SuiActionDrawer extends JComponent {
 
         } else if (currentAction instanceof SuiActionMove) {
             SuiActionMove e = (SuiActionMove) this.currentAction;
-            g2d.setStroke(SHOOT_STROKE);
+
+            if (cellSize < 50)
+                g2d.setStroke(SHOOT_STROKE_TINY);
+            else
+                g2d.setStroke(SHOOT_STROKE);
             g2d.setColor(Color.decode("#444444").brighter());
 
             int xAdd = e.getToX() == e.getX() ? 0 : cellSize / -2;
@@ -53,7 +70,7 @@ public class SuiActionDrawer extends JComponent {
 
             g2d.drawLine(getCellXMove(e.getX()), getCellYMove(e.getY()), getCellXMove(e.getToX()) + xAdd, getCellYMove(e.getToY()) + yAdd);
             g2d.setColor(Color.decode("#444444"));
-            g2d.fillOval(getCellXMove(e.getToX()) - 5 + xAdd, getCellYMove(e.getToY()) - 5 + yAdd, 12, 12);
+//            g2d.fillOval(getCellXMove(e.getToX()) - 5 + xAdd, getCellYMove(e.getToY()) - 5 + yAdd, 12, 12);
         } else if (currentAction instanceof SuiActionDie) {
             g2d.setColor(new Color(255, 30, 0, 10));
             g2d.fillRect(getCellX(currentAction.getX()), getCellY(currentAction.getY()), cellSize, cellSize);

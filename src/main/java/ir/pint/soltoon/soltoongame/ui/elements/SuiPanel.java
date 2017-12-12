@@ -4,10 +4,14 @@ import ir.pint.soltoon.soltoongame.ui.SuiConfiguration;
 import ir.pint.soltoon.soltoongame.ui.SuiManager;
 import ir.pint.soltoon.soltoongame.ui.analysis.AnalysisType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Collection;
 
 public class SuiPanel extends JPanel {
@@ -23,6 +27,7 @@ public class SuiPanel extends JPanel {
         SuiConfiguration suiConfiguration = suiManager.getSuiConfiguration();
 
         setSize(suiConfiguration.getPanelWidth(), suiConfiguration.getMapHeight());
+
         setMaximumSize(new Dimension(suiConfiguration.getPanelWidth(), suiConfiguration.getMapHeight()));
 
         Box controlsBox = Box.createHorizontalBox();
@@ -48,8 +53,13 @@ public class SuiPanel extends JPanel {
             playersBox.add(value);
         }
 
-
+        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(new Logo());
+        add(Box.createRigidArea(new Dimension(0, 40)));
         add(controlsBox);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+
+        add(Box.createRigidArea(new Dimension(0, 20)));
         add(playersBox);
     }
 
@@ -63,6 +73,8 @@ public class SuiPanel extends JPanel {
             setPreferredSize(new Dimension(suiManager.getSuiConfiguration().getPanelWidth() / 3, 30));
             setSize(suiManager.getSuiConfiguration().getPanelWidth() / 3, 30);
             setMaximumSize(new Dimension(suiManager.getSuiConfiguration().getPanelWidth() / 3, getMinimumSize().height));
+            setBorder(new LineBorder(new Color(200, 200, 200)));
+            setBackground(new Color(230, 230, 230));
         }
     }
 
@@ -75,7 +87,7 @@ public class SuiPanel extends JPanel {
             addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    SuiPanel.this.suiManager.nextAction();
+                    SuiPanel.this.suiManager.nextStep();
                 }
             });
         }
@@ -90,7 +102,7 @@ public class SuiPanel extends JPanel {
             addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    suiManager.previousAction();
+                    suiManager.prevStep();
                 }
             });
         }
@@ -146,6 +158,33 @@ public class SuiPanel extends JPanel {
         public ShowAnalysisButton() {
             setText("Show");
 
+        }
+    }
+
+    private class Logo extends JComponent {
+        public BufferedImage logo = null;
+
+        public Logo() {
+            try {
+                logo = ImageIO.read(Logo.class.getResource("/SoltoonGUI.png"));
+            } catch (IOException e) {
+                // ignore
+            }
+
+            if (logo == null)
+                return;
+
+            int width = suiManager.getSuiConfiguration().getPanelWidth();
+            Dimension dimension = new Dimension(width, width * logo.getHeight() / logo.getWidth());
+            setMaximumSize(dimension);
+            setMinimumSize(dimension);
+        }
+
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            Graphics2D g2d = (Graphics2D) graphics;
+            g2d.clearRect(0, 0, getWidth(), getHeight());
+            g2d.drawImage(logo.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, getWidth(), getHeight(), null);
         }
     }
 

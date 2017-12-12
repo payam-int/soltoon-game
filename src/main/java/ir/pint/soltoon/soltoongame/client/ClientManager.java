@@ -5,16 +5,14 @@ import ir.pint.soltoon.soltoongame.shared.Platform;
 import ir.pint.soltoon.soltoongame.shared.communication.command.*;
 import ir.pint.soltoon.soltoongame.shared.communication.query.*;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
-import ir.pint.soltoon.soltoongame.shared.communication.result.ResultAction;
 import ir.pint.soltoon.soltoongame.shared.communication.result.ResultAddFighterAction;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Status;
 import ir.pint.soltoon.soltoongame.shared.data.Agent;
 import ir.pint.soltoon.soltoongame.shared.data.Player;
 import ir.pint.soltoon.soltoongame.shared.data.action.AddFighter;
-import ir.pint.soltoon.soltoongame.shared.data.action.AddFighterType;
+import ir.pint.soltoon.soltoongame.shared.data.action.AddFighterSrv;
 import ir.pint.soltoon.utils.clients.proxy.ProxyTimeLimit;
 import ir.pint.soltoon.utils.clients.proxy.TimeAwareBeanProxy;
-import ir.pint.soltoon.utils.clients.proxy.TimeoutPolicy;
 import ir.pint.soltoon.utils.shared.comminucation.ComInputStream;
 import ir.pint.soltoon.utils.shared.comminucation.ComOutputStream;
 import ir.pint.soltoon.utils.shared.comminucation.Comminucation;
@@ -91,7 +89,7 @@ public class ClientManager {
                         if (commandAction.getAction() instanceof AddFighter) {
                             AddFighter action = (AddFighter) commandAction.getAction();
                             extra = action.getAI();
-                            command = new CommandAction(id, new AddFighterType(action));
+                            command = new CommandAction(id, new AddFighterSrv(action));
                         }
 
                     }
@@ -105,7 +103,7 @@ public class ClientManager {
                         proxyTimeLimit.setTimeLimit(GameConfiguration.QUERY_INITIALIZE_TIME);
                         proxyTimeLimit.setExtraTimeLimit(1);
 
-                        proxifiedClientExecutor.initialize(player);
+                        proxifiedClientExecutor.initialize(player, ((QueryInitialize) query).getGameBoard());
 
                         command = new CommandInitialize(query.getId());
                     } catch (Exception e) {
@@ -148,7 +146,7 @@ public class ClientManager {
     }
 
     private void postProcessCommand(Command command, Result commandResult, Object extra) {
-        if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddFighterType) {
+        if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddFighterSrv) {
             if (commandResult instanceof ResultAddFighterAction && commandResult.getStatus() == Status.SUCCESS) {
                 addAgent(((Agent) extra), ((ResultAddFighterAction) commandResult).getFighterId());
             }

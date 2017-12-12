@@ -18,13 +18,16 @@ public class GameConfiguration {
 
     public static int NUMBER_OF_PLAYERS = 2;
     public static int ROUNDS = 50;
-    public static int BOARD_WIDTH = 10;
-    public static int BOARD_HEIGHT = 10;
+    public static int BOARD_WIDTH = 30;
+    public static int BOARD_HEIGHT = 30;
+
+    public static int PLAYERS_INITIAL_MONEY = 0;
+    public static int PLAYERS_TURN_MONERY = 5;
 
 
     public static int DEFAULT_CLIENTS_COUNT = 1;
-    public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("127.0.0.1", 5566, "password1");
-    public static ComRemoteInfo DEFAULT_REMOTE_INFO2 = new ComRemoteInfo("127.0.0.1", 5567, "password2");
+    public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("player1", "First player", "127.0.0.1", 5566, "password1");
+    public static ComRemoteInfo DEFAULT_REMOTE_INFO2 = new ComRemoteInfo("player2", "Second player", "127.0.0.1", 5567, "password2");
     public static ComRemoteConfig DEFAULT_REMOTE_CONFIG = new ComRemoteConfig("password1", 5566);
     public static ComRemoteConfig DEFAULT_REMOTE_CONFIG2 = new ComRemoteConfig("password2", 5567);
 }

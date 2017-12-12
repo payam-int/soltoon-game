@@ -32,7 +32,6 @@ public class Server {
     public void connect() {
         try {
             if (!this.comServer.connectAll(true)) {
-                System.out.println("exxxxxxxxxxxxxx");
                 Platform.exit(Platform.CONNECTION_ERROR);
             }
 

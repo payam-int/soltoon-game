@@ -45,11 +45,14 @@ public class SuiConfiguration {
 
     private volatile boolean initiated = false;
     private volatile boolean play = true;
+    private volatile boolean endEventRecieved = false;
+    private volatile boolean finalSceneOnly;
 
 //    private volatile
 
 
     private Map<Long, Color> playerColors = new ConcurrentHashMap<>();
+
 
     static {
         palleteColors.addAll(Arrays.asList(Color.decode("#BF0845"), Color.decode("#233140"), Color.decode("#BA6723"), Color.decode("#62895e")));
@@ -123,7 +126,7 @@ public class SuiConfiguration {
     }
 
     public int getFrameWidth() {
-        return getMapWidth() + getPanelWidth();
+        return getMapWidth() + getPanelWidth() + 20;
     }
 
     public int getFrameHeight() {
@@ -178,5 +181,21 @@ public class SuiConfiguration {
                 ", screenSizeHeight=" + screenSizeHeight +
                 ", playerColors=" + playerColors +
                 '}';
+    }
+
+    public void setFinalSceneOnly(boolean finalSceneOnly) {
+        this.finalSceneOnly = finalSceneOnly;
+    }
+
+    public boolean isFinalSceneOnly() {
+        return finalSceneOnly;
+    }
+
+    public boolean isEndEventRecieved() {
+        return endEventRecieved;
+    }
+
+    public void setEndEventRecieved(boolean endEventRecieved) {
+        this.endEventRecieved = endEventRecieved;
     }
 }

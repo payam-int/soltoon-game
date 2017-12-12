@@ -21,9 +21,9 @@ public class SuiPlayer extends JComponent {
         this.remoteInfo = remoteInfo;
     }
 
-    public SuiPlayer(Long id, int score, ComRemoteInfo remoteInfo) {
+    public SuiPlayer(Long id, ComRemoteInfo remoteInfo, int initialMoney) {
         this.id = id;
-        this.money = 0;
+        this.money = initialMoney;
         this.score = 0;
         this.remoteInfo = remoteInfo;
     }
@@ -50,6 +50,8 @@ public class SuiPlayer extends JComponent {
 
     public void setMoney(int money) {
         this.money = money;
+        revalidate();
+        repaint();
     }
 
     public int getScore() {
@@ -58,10 +60,14 @@ public class SuiPlayer extends JComponent {
 
     public void setScore(int score) {
         this.score = score;
+        revalidate();
+        repaint();
     }
 
     public void addScore(int score) {
         this.score += score;
+        revalidate();
+        repaint();
     }
 
     public ComRemoteInfo getRemoteInfo() {
@@ -99,4 +105,9 @@ public class SuiPlayer extends JComponent {
     }
 
 
+    public void addMoney(int m) {
+        this.money += m;
+        revalidate();
+        repaint();
+    }
 }

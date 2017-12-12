@@ -16,18 +16,33 @@ public final class Move extends Action {
 
     @Override
     public boolean execute(CoreGameBoard gb, Object... extra) {
-        GameObject o = gb.getObjectByID(gb.getMyID());
-        if (o == null) return true; //age yevaght GameObject nabud
-        if (o.getRemainingRestingTime() != 0) return true;
-        Cell currentCell = o.getCell();
+
+        GameObject gameObject = gb.getObjectByID(gb.getMyId());
+
+        if (gameObject == null)
+            return true; //age yevaght GameObject nabud
+
+
+        if (gameObject.getRemainingRestingTime() != 0)
+            return true;
+
+
+        Cell currentCell = gameObject.getCell();
         Cell newCell = gb.getCellByIndex(direction.dx() + currentCell.getX(), direction.dy() + currentCell.getY());
-        if (newCell == null) return true;
+
+
+        if (newCell == null)
+            return true;
+
         if (newCell.getGameObject() != null)
             return true;
-        else CoreGameBoard.giveCellToObject(newCell, currentCell.getGameObject());
-        o.resetRestingTime();
 
-        ResultStorage.addEvent(new AgentMoveEvent(gb.getMyID(), gb.getPlayerByFighter().get(gb.getMyID()), currentCell.getX(), currentCell.getY(), newCell.getX(), newCell.getY()));
+        Cell.giveCellToObject(newCell, currentCell.getGameObject());
+
+        gameObject.resetRestingTime();
+
+        ResultStorage.addEvent(new AgentMoveEvent(gb.getMyId(), gb.getPlayerIdByFighter(gb.getMyId()), currentCell.getX(), currentCell.getY(), newCell.getX(), newCell.getY()));
+
         return false;
     }
 

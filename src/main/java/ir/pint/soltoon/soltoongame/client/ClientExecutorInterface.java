@@ -13,7 +13,7 @@ public interface ClientExecutorInterface extends TimeAwareProxyInterface {
 
     void recieveResults(Result commandResult, Agent agent);
 
-    void initialize(Player player);
+    void initialize(Player player, GameBoard gameBoard);
 
     void lastThingsToDo(GameBoard gameBoard, Agent agent);
 }

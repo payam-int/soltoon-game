@@ -1,10 +1,12 @@
 package ir.pint.soltoon.soltoongame.ui;
 
 import ir.pint.soltoon.soltoongame.ui.actions.SuiAction;
+import ir.pint.soltoon.soltoongame.ui.actions.SuiStep;
 import ir.pint.soltoon.soltoongame.ui.elements.*;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Deque;
 import java.util.Hashtable;
 import java.util.Map;
@@ -23,10 +25,10 @@ public class SuiManager {
     private volatile Boolean dependenciesResloved = false;
     private volatile Boolean playersAreReady = false;
 
-    private Deque<SuiAction> previousActions = new ConcurrentLinkedDeque<>();
-    private Deque<SuiAction> nextActions = new ConcurrentLinkedDeque<>();
+    private Deque<SuiStep> prevSteps = new ConcurrentLinkedDeque<>();
+    private Deque<SuiStep> nextSteps = new ConcurrentLinkedDeque<>();
 
-    private SuiAction currentAction = null;
+    private SuiStep currentStep = null;
 
     private SuiManager(SuiConfiguration suiConfiguration) {
         this.suiConfiguration = suiConfiguration;
@@ -47,8 +49,8 @@ public class SuiManager {
         fighters.put(fighter.getId(), fighter);
     }
 
-    public void addAction(SuiAction suiAction) {
-        nextActions.addLast(suiAction);
+    public void addStep(SuiStep suiStep) {
+        nextSteps.addLast(suiStep);
     }
 
     public static SuiManager initiate(SuiConfiguration suiConfiguration) {
@@ -88,8 +90,9 @@ public class SuiManager {
 
         this.gameFrame.add(gameBoard);
         this.gamePanel = new SuiPanel(this);
-
+        this.gameFrame.add(Box.createRigidArea(new Dimension(10, 0)));
         this.gameFrame.add(this.gamePanel);
+        this.gameFrame.add(Box.createRigidArea(new Dimension(10, 0)));
 
         gameFrame.forceRepaint();
         gameBoard.forceRepaint();
@@ -103,37 +106,43 @@ public class SuiManager {
         }
     }
 
-    public void nextAction() {
-        if (!haveNextAction())
+    public void nextStep() {
+        if (!hasNextStep())
             return;
 
-        if (currentAction != null) {
-            previousActions.addLast(currentAction);
+        if (currentStep != null) {
+            prevSteps.addLast(currentStep);
         }
 
-        currentAction = nextActions.pollFirst();
-        currentAction.apply(this);
-        actionDrawer.setCurrentAction(currentAction);
+        currentStep = nextSteps.pollFirst();
+        currentStep.apply(this);
+        if (currentStep instanceof SuiAction)
+            actionDrawer.setCurrentAction(((SuiAction) currentStep));
+        else
+            actionDrawer.setCurrentAction(null);
         repaintAll();
     }
 
 
-    public boolean haveNextAction() {
-        return (dependenciesResloved && playersAreReady) && !nextActions.isEmpty();
+    public boolean hasNextStep() {
+        return (dependenciesResloved && playersAreReady) && !nextSteps.isEmpty();
     }
 
 
-    public void previousAction() {
-        if (currentAction == null)
+    public void prevStep() {
+        if (currentStep == null || getSuiConfiguration().isFinalSceneOnly())
             return;
 
-        currentAction.revert(this);
+        currentStep.revert(this);
 
-        nextActions.addFirst(currentAction);
+        nextSteps.addFirst(currentStep);
 
-        SuiAction suiAction = previousActions.pollLast();
-        currentAction = suiAction;
-        actionDrawer.setCurrentAction(currentAction);
+        SuiStep suiStep = prevSteps.pollLast();
+        currentStep = suiStep;
+        if (currentStep instanceof SuiAction)
+            actionDrawer.setCurrentAction(((SuiAction) currentStep));
+        else
+            actionDrawer.setCurrentAction(null);
         repaintAll();
     }
 
@@ -168,4 +177,6 @@ public class SuiManager {
     public SuiPlayer getPlayer(Long player) {
         return this.players.getOrDefault(player, null);
     }
+
+
 }

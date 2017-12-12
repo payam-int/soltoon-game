@@ -12,11 +12,12 @@ public abstract class GameObject implements Serializable {
     private int remainingRestingTime = 0;
     private int remainingReloadingTime = 0;
     private int hp;
-    public final FighterType type;
+    public FighterType type;
 
-    public GameObject(Long id) {
+    public GameObject(Long id, FighterType fighterType) {
+
         this.id = id;
-        type = this.getClass().getDeclaredAnnotation(CorrespondingAttributes.class).value();
+        this.type = fighterType;
         hp = type.getHP();
         remainingReloadingTime = type.getReloadingTime();
         remainingRestingTime = type.getRestingTime();

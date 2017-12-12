@@ -1,15 +1,14 @@
 package ir.pint.soltoon.soltoongame.server;
 
+import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.data.map.Cell;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameObject;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDamagedEvent;
-import ir.pint.soltoon.soltoongame.shared.result.AgentDiedEvent;
 import ir.pint.soltoon.utils.shared.facades.json.SerializeAs;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,16 +18,15 @@ import java.util.Map;
 @SerializeAs(GameBoard.class)
 public class CoreGameBoard extends GameBoard {
     public transient ArrayList<Long> recentlyKilledIDs;
-    private transient Map<Long, Long> playerByFighter;
+
 
     public CoreGameBoard(int h, int w) {
         super(h, w);
         recentlyKilledIDs = new ArrayList<>();
-
     }
 
     public void setRound(int r) {
-        this.round = r;
+        this.currentRound = r;
     }
 
     public ArrayList<Long> getRecentlyKilledIDs() {
@@ -39,22 +37,27 @@ public class CoreGameBoard extends GameBoard {
         this.recentlyKilledIDs = recentlyKilledIDs;
     }
 
-    public Map<Long, Long> getPlayerByFighter() {
+    public Map<Long, Long> getPlayerByFighterMap() {
         return playerByFighter;
     }
+
 
     public void setPlayerByFighter(Map<Long, Long> playerByFighter) {
         this.playerByFighter = playerByFighter;
     }
 
     public void setMoneyPerTurn(Long id, int x) {
-        this.playerID2moneyPerTurn.put(id, x);
+        this.moneyPerTurnByPlayer.put(id, x);
+    }
+
+    public void setPlayerMoney(Long id, int value) {
+        moneyByPlayer.put(id, value);
     }
 
     public void timePassedForCurrentPlayer() {
-        GameObject o = getObjectByID(getMyID());
+        GameObject o = getObjectByID(getMyId());
         if (o == null) {
-            playerID2money.put(getMyID(), getMoneyByID(myID) + getMoneyPerTurn(myID));
+            moneyByPlayer.put(getMyId(), getMoneyById(myId) + getMoneyPerTurn(myId));
         } else {
             o.remainingReloadingTimeMM();
             o.remainingRestingTimeMM();
@@ -70,48 +73,58 @@ public class CoreGameBoard extends GameBoard {
             deleteObjectByID(o.id);
             recentlyKilledIDs.add(o.id);
             return o;
-        } else {
-            ResultStorage.addEvent(new AgentDamagedEvent(o.getId(), playerByFighter.get(o.getId()), getMyID(), amount, o.getHp(), o.getCell().getX(), o.getCell().getY()));
         }
+
+        ResultStorage.addEvent(new AgentDamagedEvent(o.getId(), playerByFighter.get(o.getId()), getMyId(), amount, o.getHp(), o.getCell().getX(), o.getCell().getY()));
         return null;
     }
 
     private void deleteObjectByID(Long id) {
-        GameObject o = id2object.get(id);
+        GameObject o = gameObjectById.get(id);
         if (o == null) return;
         o.getCell().setGameObject(null);
-        id2object.remove(id);
-        id2owner.remove(id);
-        for (Long pid : playerID2ids.keySet())
-            playerID2ids.get(pid).remove(o);
-    }
-
-    public void setMyID(Long myID) {
-        playerIDs.add(myID);
-        this.myID = myID;
+        gameObjectById.remove(id);
+        playerByFighter.remove(id);
+        for (Long pid : fightersByPlayer.keySet())
+            fightersByPlayer.get(pid).remove(o);
     }
 
     public void decreaseMoneyByID(Long id, int value) {
         if (value < 0) return;
-        if (getMoneyByID(id) - value < 0) value = getMoneyByID(id);
-        playerID2money.put(id, getMoneyByID(id) - value);
+        if (getMoneyById(id) - value < 0) value = getMoneyById(id);
+        moneyByPlayer.put(id, getMoneyById(id) - value);
     }
 
-    public void increasePenaltyByID(Long id, int value) {
-        if (value < 0) return;
-        playerID2penalty.put(id, getPenaltyByID(id) + value);
+    public void increasePenaltyById(Long id, int value) {
+        penaltyByPlayer.put(id, getPenaltyByID(id) + value);
     }
 
-    public static void giveCellToObject(Cell cell, GameObject o) {
-        if (o.getCell() != null)
-            o.getCell().setGameObject(null);
-        cell.setGameObject(o);
-        o.setCell(cell);
-    }
 
     public void addObject(GameObject o) {
-        id2object.put(o.id, o);
-        id2owner.put(o.id, myID);
-        //playerID2ids.get(myID).add(o.id);
+        gameObjectById.put(o.id, o);
+        playerByFighter.put(o.id, myId);
+        fightersByPlayer.get(getMyId()).add(o.id);
+    }
+
+
+    public Map<Long, GameObject> getGameObjectByIdMap() {
+        return gameObjectById;
+    }
+
+    public void addPlayer(Long player) {
+        playerIDs.add(player);
+        if (!fightersByPlayer.containsKey(player))
+            fightersByPlayer.put(player, new ArrayList<>());
+
+        moneyByPlayer.put(player, GameConfiguration.PLAYERS_INITIAL_MONEY);
+    }
+
+    public void setMyId(Long myId) {
+        this.myId = myId;
+    }
+
+
+    public Map<Long, Integer> getMoneyByPlayer() {
+        return moneyByPlayer;
     }
 }

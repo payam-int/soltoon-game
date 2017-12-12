@@ -1,9 +1,5 @@
 package ir.pint.soltoon.soltoongame.ui;
 
-import ir.pint.soltoon.soltoongame.FighterUI;
-import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
-import ir.pint.soltoon.soltoongame.shared.data.Fighter;
-import ir.pint.soltoon.soltoongame.shared.data.map.FighterType;
 import ir.pint.soltoon.soltoongame.shared.result.*;
 import ir.pint.soltoon.soltoongame.ui.actions.*;
 import ir.pint.soltoon.soltoongame.ui.elements.SuiFighter;
@@ -32,7 +28,7 @@ public class SuiResultPipe implements ResultHandler {
             if (eventLog instanceof PlayerJoin) {
                 PlayerJoin e = (PlayerJoin) eventLog;
 
-                SuiPlayer suiPlayer = new SuiPlayer(e.getId(), e.getRemoteInfo());
+                SuiPlayer suiPlayer = new SuiPlayer(e.getId(), e.getRemoteInfo(), e.getInitialMoney());
                 suiManager.addPlayer(suiPlayer);
 
                 if (playerDependencies.decrementAndGet() < 1) {
@@ -41,47 +37,36 @@ public class SuiResultPipe implements ResultHandler {
             } else if (eventLog instanceof AgentAddEvent) {
                 AgentAddEvent e = (AgentAddEvent) eventLog;
 
-                SuiFighter suiFighter = new SuiFighter(FighterUI.get(e.getAgentType()), e.getX(), e.getY(), e.getAgent(), e.getPlayer(), e.getHp());
+                SuiFighter suiFighter = new SuiFighter(SuiFighterType.get(e.getAgentType()), e.getX(), e.getY(), e.getAgent(), e.getPlayer(), e.getHp());
                 suiManager.addFighter(suiFighter);
 
-                SuiActionAdd suiActionAdd = new SuiActionAdd(e.getX(), e.getY(), e.getAgent(), e.getPlayer());
-                suiManager.addAction(suiActionAdd);
+                SuiActionAdd suiActionAdd = new SuiActionAdd(e.getX(), e.getY(), e.getAgent(), e.getPlayer(), e.getScore(), e.getCost());
+                suiManager.addStep(suiActionAdd);
             } else if (eventLog instanceof AgentMoveEvent) {
                 AgentMoveEvent e = (AgentMoveEvent) eventLog;
 
                 SuiActionMove suiActionMove = new SuiActionMove(e.getFromX(), e.getFromY(), e.getAgent(), e.getPlayer(), e.getToX(), e.getToY());
-                suiManager.addAction(suiActionMove);
+                suiManager.addStep(suiActionMove);
             } else if (eventLog instanceof AgentShootEvent) {
                 AgentShootEvent e = (AgentShootEvent) eventLog;
 
                 SuiActionShoot suiActionShoot = new SuiActionShoot(e.getX(), e.getY(), e.getPlayer(), e.getTargetX(), e.getTargetY());
-                suiManager.addAction(suiActionShoot);
+                suiManager.addStep(suiActionShoot);
             } else if (eventLog instanceof AgentDiedEvent) {
                 AgentDiedEvent e = (AgentDiedEvent) eventLog;
                 SuiActionDie suiActionDie = new SuiActionDie(e.getAgent(), e.getPlayer(), e.getPenalty(), e.getX(), e.getY());
-                suiManager.addAction(suiActionDie);
+                suiManager.addStep(suiActionDie);
             } else if (eventLog instanceof AgentDamagedEvent) {
                 AgentDamagedEvent e = (AgentDamagedEvent) eventLog;
                 SuiActionDamage suiActionDamage = new SuiActionDamage(e.getX(), e.getY(), e.getPlayer(), e.getAgent(), e.getDamage());
-                suiManager.addAction(suiActionDamage);
+                suiManager.addStep(suiActionDamage);
+            } else if (eventLog instanceof GameEndedEvent) {
+                suiManager.getSuiConfiguration().setEndEventRecieved(true);
+            }else if (eventLog instanceof RoundStartEvent){
+                RoundStartEvent e = (RoundStartEvent) eventLog;
+                SuiNextRound suiNextRound = new SuiNextRound(e.getRound(), e.getMoneyByPlayer());
+                suiManager.addStep(suiNextRound);
             }
-//            else if (eventLog instanceof AgentAddEvent) {
-//                SuiActionAdd suiActionAdd = new SuiActionAdd(((AgentAddEvent) eventLog).getX(), ((AgentAddEvent) eventLog).getY(), ((AgentAddEvent) eventLog).getAgent(), ((AgentAddEvent) eventLog).getPlayer());
-//                SuiFighter suiFighter = new SuiFighter(FighterUI.get(((AgentAddEvent) eventLog).getAgentType()), ((AgentAddEvent) eventLog).getX(), ((AgentAddEvent) eventLog).getY(), ((AgentAddEvent) eventLog).getAgent(), ((AgentAddEvent) eventLog).getPlayer());
-//
-//                suiConfiguration.addFighter(suiFighter);
-//                suiConfiguration.addAction(suiActionAdd);
-//            } else if (eventLog instanceof AgentShootEvent) {
-//                AgentShootEvent e = (AgentShootEvent) eventLog;
-//                SuiActionShoot suiActionShoot = new SuiActionShoot(e.getX(), e.getY(), e.getPlayer(), e.getTargetX(), e.getTargetY(), 0);
-//                suiConfiguration.addAction(suiActionShoot);
-//            } else if (eventLog instanceof AgentMoveEvent) {
-//                AgentMoveEvent e = (AgentMoveEvent) eventLog;
-//                SuiActionMove suiActionShoot = new SuiActionMove(e.getFromX(), e.getFromY(), e.getAgent(), e.getPlayer(), e.getToX(), e.getToY());
-//                suiConfiguration.addAction(suiActionShoot);
-//            } else {
-//                System.out.println(eventLog.getClass());
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,6 +92,8 @@ public class SuiResultPipe implements ResultHandler {
         } else if (s.equals("rounds")) {
             suiConfiguration.setRounds(((int) o));
             mapDependencies.decrementAndGet();
+        } else if (s.equals("finalSceneOnly")) {
+            suiConfiguration.setFinalSceneOnly(((boolean) o));
         }
 
         if (mapDependencies.get() < 1)

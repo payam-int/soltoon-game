@@ -27,6 +27,7 @@ public class SuiGameBoard extends JPanel {
     protected void paintComponent(Graphics graphics) {
         SuiConfiguration suiConfiguration = suiManager.getSuiConfiguration();
         int cellSize = suiConfiguration.getCellSize();
+
         if (suiConfiguration.isInitiated()) {
             graphics.clearRect(0, 0, getWidth(), getHeight());
             graphics.setColor(Color.decode("#fafafa"));

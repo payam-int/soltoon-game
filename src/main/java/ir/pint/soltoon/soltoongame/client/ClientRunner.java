@@ -24,4 +24,8 @@ public class ClientRunner {
         clientManager.run();
         Platform.exit(Platform.OK);
     }
+
+    public static void runPlayerTwo(Class<? extends Player> playerClass) {
+        run(playerClass, GameConfiguration.DEFAULT_REMOTE_CONFIG2);
+    }
 }

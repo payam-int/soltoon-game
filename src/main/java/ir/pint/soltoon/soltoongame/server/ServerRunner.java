@@ -1,10 +1,10 @@
 package ir.pint.soltoon.soltoongame.server;
 
+import ir.pint.soltoon.soltoongame.server.scenarios.FirstScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.SecondScenarioServerManager;
 import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.Platform;
 import ir.pint.soltoon.soltoongame.ui.GUIRunner;
-import ir.pint.soltoon.utils.shared.comminucation.ComInputStream;
-import ir.pint.soltoon.utils.shared.comminucation.ComOutputStream;
 import ir.pint.soltoon.utils.shared.comminucation.ComRemoteInfo;
 import ir.pint.soltoon.utils.shared.comminucation.ComServer;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
@@ -58,10 +58,58 @@ public class ServerRunner {
         Server server = new Server(comServer);
 
         // start judge
-        ServerManager serverManager = new ServerManager(server);
+        ServerManager serverManager = new DefaultServerManager(server);
         serverManager.run();
 
         Platform.exit(Platform.OK);
     }
 
+
+    public static void runFirstScenario() {
+        runFirstScenario(GameConfiguration.DEFAULT_REMOTE_INFO);
+    }
+
+    public static void runFirstScenario(ComRemoteInfo comRemoteInfo) {
+        runFirstScenario(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.BOARD_WIDTH, GameConfiguration.BOARD_HEIGHT);
+    }
+
+    public static void runFirstScenario(ComRemoteInfo remoteInfo, int width, int height) {
+        // rebound communication between server and clients.
+        ComServer comServer = ComServer.initiate(remoteInfo);
+
+        GUIRunner.openGUI();
+
+        // CREATE comminucation wrapper
+        Server server = new Server(comServer);
+
+        // start judge
+        ServerManager serverManager = new FirstScenarioServerManager(server, width, height);
+        serverManager.run();
+
+        Platform.exit(Platform.OK);
+    }
+
+    public static void runSecondScenario() {
+        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO);
+    }
+
+    public static void runSecondScenario(ComRemoteInfo comRemoteInfo) {
+        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.BOARD_WIDTH, GameConfiguration.BOARD_HEIGHT);
+    }
+
+    public static void runSecondScenario(ComRemoteInfo remoteInfo, int width, int height) {
+        // rebound communication between server and clients.
+        ComServer comServer = ComServer.initiate(remoteInfo);
+
+        GUIRunner.openGUI();
+
+        // CREATE comminucation wrapper
+        Server server = new Server(comServer);
+
+        // start judge
+        ServerManager serverManager = new SecondScenarioServerManager(server, width, height);
+        serverManager.run();
+
+        Platform.exit(Platform.OK);
+    }
 }

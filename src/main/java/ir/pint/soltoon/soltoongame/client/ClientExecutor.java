@@ -26,9 +26,9 @@ public class ClientExecutor extends DefaultTimeAwareBean implements ClientExecut
     }
 
     @Override
-    public void initialize(Player player) {
+    public void initialize(Player player, GameBoard gameBoard) {
         player.setParentBean(this);
-        player.init();
+        player.init(gameBoard);
     }
 
     @Override

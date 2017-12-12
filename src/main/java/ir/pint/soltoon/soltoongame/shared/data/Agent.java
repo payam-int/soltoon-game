@@ -5,10 +5,8 @@ import ir.pint.soltoon.soltoongame.shared.data.action.Action;
 import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
 import ir.pint.soltoon.utils.clients.proxy.ProxyReturnStorage;
 import ir.pint.soltoon.utils.clients.proxy.TimeAwareBean;
-import ir.pint.soltoon.utils.clients.proxy.TimeAwareProxyInterface;
 
 import java.io.Serializable;
-import java.util.Random;
 
 public abstract class Agent implements Serializable, TimeAwareBean {
 
@@ -18,7 +16,7 @@ public abstract class Agent implements Serializable, TimeAwareBean {
     protected Agent() {
     }
 
-    public abstract void init();
+    public abstract void init(GameBoard gameBoard);
 
     public abstract void lastThingsToDo(GameBoard gameBoard);
 
