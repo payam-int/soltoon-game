@@ -18,8 +18,8 @@ public class GameConfiguration {
 
     public static int NUMBER_OF_PLAYERS = 2;
     public static int ROUNDS = 50;
-    public static int BOARD_WIDTH = 30;
-    public static int BOARD_HEIGHT = 30;
+    public static int BOARD_WIDTH = 10;
+    public static int BOARD_HEIGHT = 10;
 
     public static int PLAYERS_INITIAL_MONEY = 0;
     public static int PLAYERS_TURN_MONERY = 5;

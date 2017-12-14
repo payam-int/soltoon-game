@@ -43,7 +43,6 @@ public class AddFighterSrv extends Action {
             if (!Objects.equals(gb.getPlayerIdByFighter(o.getId()), gb.getMyId())) {
                 if (gb.getCellByIndex(x, y).getDistance(o.getCell()) <= type.getShootingRange()) {
                     ok = false;
-                    System.out.println("fuck");
                 }
             } else {
 

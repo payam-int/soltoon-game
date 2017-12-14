@@ -21,10 +21,6 @@ import java.util.*;
  * Created by amirkasra on 9/30/2017 AD.
  */
 public class DefaultServerManager extends ServerManager {
-
-    private Server server;
-    private CoreGameBoard gameBoard;
-
     private LinkedList<Long> fighters = new LinkedList<>();
     private Map<Long, Long> playerByFighter = new HashMap<>();
 
@@ -51,9 +47,11 @@ public class DefaultServerManager extends ServerManager {
         for (int round = 0; round < this.rounds; round++) {
 
             gameBoard.setRound(round);
+            updatePlayersMoney();
 
-            ResultStorage.addEvent(new RoundStartEvent(round, gameBoard.getMoneyByPlayer()));
-
+            HashMap<Long, Integer> currentMoney = new HashMap<>();
+            currentMoney.putAll(gameBoard.getMoneyByPlayer());
+            ResultStorage.addEvent(new RoundStartEvent(round, currentMoney));
             doRound();
         }
 
@@ -62,6 +60,15 @@ public class DefaultServerManager extends ServerManager {
         sendExitSignal();
 
         Platform.exit(Platform.OK);
+    }
+
+    private void updatePlayersMoney() {
+        Set<Long> players = server.getClients().keySet();
+
+        for (Long player : players) {
+            updateGameBoardForPlayer(player);
+            gameBoard.timePassedForCurrentPlayer();
+        }
     }
 
     private void sendExitSignal() {
@@ -178,7 +185,6 @@ public class DefaultServerManager extends ServerManager {
     private void updateGameBoardForPlayer(Long player) {
         gameBoard.setMyId(player);
         gameBoard.setMoneyPerTurn(gameBoard.getMyId(), GameConfiguration.PLAYERS_TURN_MONERY);
-        gameBoard.timePassedForCurrentPlayer();
     }
 
 
