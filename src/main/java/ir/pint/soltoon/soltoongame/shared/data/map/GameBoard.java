@@ -3,6 +3,11 @@ package ir.pint.soltoon.soltoongame.shared.data.map;
 
 import java.util.*;
 
+/**
+ * This class holds all information about the game.
+ * @author Payam Mohammadi
+ * @since 1.0.0
+ */
 public class GameBoard {
     protected Cell[][] cells;
 
@@ -19,7 +24,6 @@ public class GameBoard {
     protected Map<Long, Long> playerByFighter;
     protected Map<Long, List<Long>> fightersByPlayer;
     protected Set<Long> playerIDs;
-
 
 
     public GameBoard() {
@@ -53,15 +57,23 @@ public class GameBoard {
                 this.cells[i][j] = new Cell(i, j);
     }
 
+    /**
+     * @return If you call this from a {@link ir.pint.soltoon.soltoongame.shared.data.Player} or {@link ir.pint.soltoon.soltoongame.shared.data.Fighter} object returns object's id in If you call this from a Player or Fighter object returns object's ID in the game otherwise its function is unpredictable.
+     */
     public Long getMyId() {
         return this.myId;
     }
 
-
+    /**
+     * @return Map height.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * @return Map width.
+     */
     public int getWidth() {
         return width;
     }

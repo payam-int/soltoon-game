@@ -89,12 +89,8 @@ public class ServerRunner {
         Platform.exit(Platform.OK);
     }
 
-    public static void runSecondScenario() {
-        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO);
-    }
-
-    public static void runSecondScenario(ComRemoteInfo comRemoteInfo) {
-        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.BOARD_WIDTH, GameConfiguration.BOARD_HEIGHT);
+    public static void runSecondScenario(int width, int height) {
+        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO, width, height);
     }
 
     public static void runSecondScenario(ComRemoteInfo remoteInfo, int width, int height) {

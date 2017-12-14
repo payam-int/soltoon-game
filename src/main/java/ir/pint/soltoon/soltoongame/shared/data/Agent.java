@@ -8,6 +8,10 @@ import ir.pint.soltoon.utils.clients.proxy.TimeAwareBean;
 
 import java.io.Serializable;
 
+/**
+ * @author Payam Mohammadi
+ * @since 1.0.0
+ */
 public abstract class Agent implements Serializable, TimeAwareBean {
 
     private TimeAwareBean parentBean;

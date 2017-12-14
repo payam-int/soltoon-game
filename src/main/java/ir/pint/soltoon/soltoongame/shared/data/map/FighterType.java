@@ -2,41 +2,56 @@ package ir.pint.soltoon.soltoongame.shared.data.map;
 
 
 /**
- * Created by amirkasra on 9/30/2017 AD.
+ * This Enum helps you get information about different fighter types.
+ *
+ * @author Payam Mohammadi
+ * @since 1.0.0
  */
-
-
 public enum FighterType {
-    MUSKETEER, CANNON, GIANT, CASTLE;
+    MUSKETEER,
+    CANNON,
+    GIANT,
+    CASTLE;
 
+    /**
+     * https://en.wikipedia.org/wiki/Health_(gaming)
+     *
+     * @return Initial HP
+     */
     public Integer getHP() {
         switch (this) {
             case MUSKETEER:
                 return 100;
             case CANNON:
-                return 50;
+                return 2000;
             case GIANT:
                 return 500;
             case CASTLE:
-                return 2000;
+                return 10000;
         }
         return null;
     }
 
+    /*
+     * @return The number of rounds the fighter cannot shoot after each shooting.
+     */
     public Integer getReloadingTime() {
         switch (this) {
             case CANNON:
-                return 1;
+                return 2;
             case GIANT:
                 return 4;
             case CASTLE:
-                return 1;
-            case MUSKETEER:
                 return 2;
+            case MUSKETEER:
+                return 1;
         }
         return null;
     }
 
+    /**
+     * @return The number of rounds the fighter cannot move after each moving.
+     */
     public Integer getRestingTime() {
         switch (this) {
             case CANNON:
@@ -71,25 +86,30 @@ public enum FighterType {
             case CANNON:
                 return 10;
             case GIANT:
-                return 50;
+                return 3;
             case CASTLE:
-                return 1000;
+                return 100;
             case MUSKETEER:
-                return 20;
+                return 1;
         }
         return null;
     }
 
+    /**
+     * Distance between two cells is Diff in x-axis + Diff in y-axis.
+     *
+     * @return Maximum distance of the target
+     */
     public Integer getShootingRange() {
         switch (this) {
             case MUSKETEER:
-                return 5;
-            case CANNON:
                 return 3;
+            case CANNON:
+                return 5;
             case GIANT:
-                return 2;
+                return 1;
             case CASTLE:
-                return 8;
+                return 7;
         }
         return null;
     }
@@ -97,23 +117,23 @@ public enum FighterType {
     public Integer getShootingPower() {
         switch (this) {
             case CASTLE:
-                return 50;
+                return 100;
             case MUSKETEER:
-                return 5;
-            // @todo add these
+                return 20;
             case CANNON:
-                return 5;
+                return 50;
             case GIANT:
-                return 5;
+                return 250;
         }
         return 0;
     }
 
-    public Integer getPenalty() {
-        return getCost() / 2;
-    }
-    public Integer getCreatePoint() {
+    public Integer getDeathPenalty() {
         return getCost() / 4;
+    }
+
+    public Integer getCreatePoint() {
+        return getCost() / 2;
     }
 
     public static FighterType getRandomType() {

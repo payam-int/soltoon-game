@@ -8,6 +8,7 @@ public final class Cell implements Serializable {
     private int x, y;
 
     private transient GameObject gameObject = null;
+
     Long gameObjectId = Long.MIN_VALUE;
 
     public Cell(int x, int y) {
@@ -45,16 +46,9 @@ public final class Cell implements Serializable {
     public int getDistance(Cell destination) {
         int difX = this.getX() - destination.getX();
         int difY = this.getY() - destination.getY();
-        //ToDo kodum behtare ?
-        //return (int)(Math.ceil(Math.sqrt(Math.pow(difX, 2) + Math.pow(difY, 2))));
+        // @ToDo kodum behtare ?
+        // return (int)(Math.ceil(Math.sqrt(Math.pow(difX, 2) + Math.pow(difY, 2))));
         return Math.abs(difX) + Math.abs(difY);
-    }
-
-    @Override
-    public String toString() {
-        if (gameObject instanceof Giant) return "G";
-        if (gameObject instanceof Castle) return "T";
-        return ".";
     }
 
 

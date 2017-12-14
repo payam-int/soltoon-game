@@ -1,11 +1,5 @@
 package ir.pint.soltoon.soltoongame.shared.data.map;
 
-
-
-/**
- * Created by amirkasra on 9/29/2017 AD.
- */
-
 public enum Direction {
     right,left,up,down;
 

@@ -45,12 +45,12 @@ public final class Shoot extends Action {
         GameObject dead = gb.ShootToCell(target, type.getShootingPower());
 
         if (dead != null) {
-            gb.increasePenaltyById(gb.getPlayerIdByFighter(dead.id), dead.type.getPenalty());
+            gb.increasePenaltyById(gb.getPlayerIdByFighter(dead.id), dead.type.getDeathPenalty());
 
             Long deadFighterOwner = gb.getPlayerIdByFighter(dead.getId());
             Long killer = player;
 
-            ResultStorage.addEvent(new AgentDiedEvent(dead.getId(), x, y, dead.type.getPenalty(), deadFighterOwner, killer));
+            ResultStorage.addEvent(new AgentDiedEvent(dead.getId(), x, y, dead.type.getDeathPenalty(), deadFighterOwner, killer));
         }
         return false;
     }
