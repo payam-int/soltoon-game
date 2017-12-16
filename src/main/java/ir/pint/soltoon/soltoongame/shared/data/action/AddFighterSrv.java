@@ -28,6 +28,9 @@ public class AddFighterSrv extends Action {
 
     @Override
     public boolean execute(CoreGameBoard gb, Object... extra) {
+        if (type == null)
+            return true;
+
         if (gb.getObjectByID(gb.getMyId()) != null) {
             return true; //GameObject nabashe yevaght
         }

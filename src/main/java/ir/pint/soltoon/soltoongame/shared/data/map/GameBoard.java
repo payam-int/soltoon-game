@@ -5,6 +5,7 @@ import java.util.*;
 
 /**
  * This class holds all information about the game.
+ *
  * @author Payam Mohammadi
  * @since 1.0.0
  */

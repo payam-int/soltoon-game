@@ -84,9 +84,8 @@ public class CoreGameBoard extends GameBoard {
         if (o == null) return;
         o.getCell().setGameObject(null);
         gameObjectById.remove(id);
-        playerByFighter.remove(id);
         for (Long pid : fightersByPlayer.keySet())
-            fightersByPlayer.get(pid).remove(o);
+            fightersByPlayer.get(pid).remove(o.getId());
     }
 
     public void decreaseMoneyByID(Long id, int value) {

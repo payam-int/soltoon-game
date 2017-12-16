@@ -74,7 +74,7 @@ public class JavadTypeResultHandler implements ResultHandler {
 
     @Override
     public boolean flush() {
-        System.out.println("\n\n** JAVAD RESULT **\n\n" + result + "\n\n");
+//        System.out.println("\n\n** JAVAD RESULT **\n\n" + result + "\n\n");
         return true;
     }
 }

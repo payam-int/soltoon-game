@@ -146,7 +146,6 @@ public class DefaultServerManager extends ServerManager {
         for (Long player : players) {
             boolean skipPlayer = false;
             updateGameBoardForPlayer(player);
-
             while (!skipPlayer) {
                 QueryAction queryAction = new QueryAction(player, gameBoard);
                 Command command = server.query(queryAction, player, GameConfiguration.QUERY_WAIT_TIME);
