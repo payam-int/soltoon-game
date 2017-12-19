@@ -1,7 +1,9 @@
 package ir.pint.soltoon.soltoongame.server;
 
-import ir.pint.soltoon.soltoongame.server.scenarios.FirstScenarioServerManager;
-import ir.pint.soltoon.soltoongame.server.scenarios.SecondScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.free.FreeServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.helloWorld.FirstScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.name.SecondScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.sync.JavadTypeResultHandler;
 import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.Platform;
 import ir.pint.soltoon.soltoongame.ui.GUIRunner;
@@ -58,7 +60,7 @@ public class ServerRunner {
         Server server = new Server(comServer);
 
         // start judge
-        ServerManager serverManager = new DefaultServerManager(server);
+        ServerManager serverManager = new FreeServerManager(server);
         serverManager.run();
 
         Platform.exit(Platform.OK);

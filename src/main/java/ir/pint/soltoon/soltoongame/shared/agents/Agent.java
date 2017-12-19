@@ -1,8 +1,8 @@
-package ir.pint.soltoon.soltoongame.shared.data;
+package ir.pint.soltoon.soltoongame.shared.agents;
 
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
-import ir.pint.soltoon.soltoongame.shared.data.action.Action;
-import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
+import ir.pint.soltoon.soltoongame.shared.actions.Action;
+import ir.pint.soltoon.soltoongame.shared.map.Game;
 import ir.pint.soltoon.utils.clients.proxy.ProxyReturnStorage;
 import ir.pint.soltoon.utils.clients.proxy.TimeAwareBean;
 
@@ -20,13 +20,13 @@ public abstract class Agent implements Serializable, TimeAwareBean {
     protected Agent() {
     }
 
-    public abstract void init(GameBoard gameBoard);
+    public abstract void init(Game gameBoard);
 
-    public abstract void lastThingsToDo(GameBoard gameBoard);
+    public abstract void lastThingsToDo(Game gameBoard);
 
-    public abstract Action getAction(GameBoard gb);
+    public abstract Action getAction(Game gb);
 
-    public void recieveResults(Result result){
+    public void recieveResults(Result result) {
 
     }
 

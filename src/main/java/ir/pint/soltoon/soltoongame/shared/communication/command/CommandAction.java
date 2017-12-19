@@ -1,6 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.communication.command;
 
-import ir.pint.soltoon.soltoongame.shared.data.action.Action;
+import ir.pint.soltoon.soltoongame.shared.actions.Action;
 
 public class CommandAction extends Command{
 

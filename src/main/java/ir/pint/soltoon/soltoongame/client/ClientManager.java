@@ -7,10 +7,9 @@ import ir.pint.soltoon.soltoongame.shared.communication.query.*;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
 import ir.pint.soltoon.soltoongame.shared.communication.result.ResultAddFighterAction;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Status;
-import ir.pint.soltoon.soltoongame.shared.data.Agent;
-import ir.pint.soltoon.soltoongame.shared.data.Player;
-import ir.pint.soltoon.soltoongame.shared.data.action.AddFighter;
-import ir.pint.soltoon.soltoongame.shared.data.action.AddFighterSrv;
+import ir.pint.soltoon.soltoongame.shared.agents.Agent;
+import ir.pint.soltoon.soltoongame.shared.agents.Soltoon;
+import ir.pint.soltoon.soltoongame.shared.actions.AddKhadang;
 import ir.pint.soltoon.utils.clients.proxy.ProxyTimeLimit;
 import ir.pint.soltoon.utils.clients.proxy.TimeAwareBeanProxy;
 import ir.pint.soltoon.utils.shared.comminucation.ComInputStream;
@@ -27,9 +26,9 @@ public class ClientManager {
     private Map<Long, Agent> agents = new HashMap<>();
 
     private Comminucation comminucation;
-    private Class<? extends Player> player;
+    private Class<? extends Soltoon> player;
 
-    public ClientManager(Class<? extends Player> player, Comminucation comminucation) {
+    public ClientManager(Class<? extends Soltoon> player, Comminucation comminucation) {
         this.player = player;
         this.comminucation = comminucation;
     }
@@ -86,16 +85,16 @@ public class ClientManager {
                         proxyTimeLimit.setExtraTimeLimit(GameConfiguration.QUERY_EXTRA_TIME);
                         CommandAction commandAction = proxifiedClientExecutor.queryAction(((QueryAction) query), agent);
                         command = commandAction;
-                        if (commandAction.getAction() instanceof AddFighter) {
-                            AddFighter action = (AddFighter) commandAction.getAction();
-                            extra = action.getAI();
-                            command = new CommandAction(id, new AddFighterSrv(action));
+                        if (commandAction.getAction() instanceof AddKhadang) {
+                            AddKhadang action = (AddKhadang) commandAction.getAction();
+                            extra = action.getKhadang();
+
                         }
 
                     }
                 } else if (query instanceof QueryInitialize) {
                     try {
-                        Player player = this.player.newInstance();
+                        Soltoon player = this.player.newInstance();
                         agent = player;
                         player.setId(query.getId());
                         addAgent(player, query.getId());
@@ -146,7 +145,7 @@ public class ClientManager {
     }
 
     private void postProcessCommand(Command command, Result commandResult, Object extra) {
-        if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddFighterSrv) {
+        if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddKhadang) {
             if (commandResult instanceof ResultAddFighterAction && commandResult.getStatus() == Status.SUCCESS) {
                 addAgent(((Agent) extra), ((ResultAddFighterAction) commandResult).getFighterId());
             }

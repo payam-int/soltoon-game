@@ -1,17 +1,17 @@
 package ir.pint.soltoon.soltoongame.shared.result;
 
-import ir.pint.soltoon.soltoongame.shared.data.map.FighterType;
+import ir.pint.soltoon.soltoongame.shared.map.KhadangType;
 
 public class AgentAddEvent extends Event {
     private long agent;
-    private FighterType agentType;
+    private KhadangType agentType;
     private int hp;
     private int x, y;
     private long player;
     private int score;
     private int cost;
 
-    public AgentAddEvent(long agent, int x, int y, FighterType agentType, int hp, long player, int score, int cost) {
+    public AgentAddEvent(long agent, int x, int y, KhadangType agentType, int hp, long player, int score, int cost) {
         super(EventType.AGENT_ADD);
         this.agent = agent;
         this.x = x;
@@ -39,11 +39,11 @@ public class AgentAddEvent extends Event {
         this.player = player;
     }
 
-    public FighterType getAgentType() {
+    public KhadangType getAgentType() {
         return agentType;
     }
 
-    public void setAgentType(FighterType agentType) {
+    public void setAgentType(KhadangType agentType) {
         this.agentType = agentType;
     }
 

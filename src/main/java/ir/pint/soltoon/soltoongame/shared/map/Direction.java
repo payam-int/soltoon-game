@@ -1,31 +1,31 @@
-package ir.pint.soltoon.soltoongame.shared.data.map;
+package ir.pint.soltoon.soltoongame.shared.map;
 
 public enum Direction {
-    right,left,up,down;
+    RIGHT, LEFT, UP, DOWN;
 
-    public int dx() {
+    public int xDifference() {
         switch (this) {
-            case down:
+            case DOWN:
                 return 0;
-            case left:
+            case LEFT:
                 return -1;
-            case right:
+            case RIGHT:
                 return 1;
-            case up:
+            case UP:
                 return 0;
         }
         return 0;
     }
 
-    public int dy() {
+    public int yDifference() {
         switch (this) {
-            case down:
+            case DOWN:
                 return -1;
-            case left:
+            case LEFT:
                 return 0;
-            case right:
+            case RIGHT:
                 return 0;
-            case up:
+            case UP:
                 return 1;
         }
         return 0;

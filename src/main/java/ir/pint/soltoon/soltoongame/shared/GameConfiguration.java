@@ -4,6 +4,8 @@ import ir.pint.soltoon.utils.shared.comminucation.ComRemoteConfig;
 import ir.pint.soltoon.utils.shared.comminucation.ComRemoteInfo;
 
 public class GameConfiguration {
+    public static double INITIAL_HP_COEFF = 1;
+    public static int PLAYERS_INITIAL_SCORE = 0;
     public static double CONNECTION_COEFF = 1.3;
     public static double EXTRA_TIME_COEFF = 0.2;
     public static long QUERY_TIME = 2000L;

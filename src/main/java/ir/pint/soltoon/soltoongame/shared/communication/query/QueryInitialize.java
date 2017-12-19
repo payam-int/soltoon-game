@@ -1,27 +1,27 @@
 package ir.pint.soltoon.soltoongame.shared.communication.query;
 
-import ir.pint.soltoon.soltoongame.shared.data.map.GameBoard;
+import ir.pint.soltoon.soltoongame.shared.map.Game;
 
 /**
  * Created by amirkasra on 9/30/2017 AD.
  */
 public class QueryInitialize extends Query {
-    private GameBoard gameBoard;
+    private Game gameBoard;
 
     public QueryInitialize(Long id) {
         super(id);
     }
 
-    public QueryInitialize(Long id, GameBoard gameBoard) {
+    public QueryInitialize(Long id, Game gameBoard) {
         super(id);
         this.gameBoard = gameBoard;
     }
 
-    public GameBoard getGameBoard() {
+    public Game getGameBoard() {
         return gameBoard;
     }
 
-    public void setGameBoard(GameBoard gameBoard) {
+    public void setGameBoard(Game gameBoard) {
         this.gameBoard = gameBoard;
     }
 }

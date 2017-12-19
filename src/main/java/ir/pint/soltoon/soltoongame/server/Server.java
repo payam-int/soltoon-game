@@ -10,7 +10,6 @@ import ir.pint.soltoon.utils.shared.comminucation.ComServer;
 import ir.pint.soltoon.utils.shared.comminucation.Comminucation;
 import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
 import ir.pint.soltoon.utils.shared.facades.uuid.UUID;
-import sun.reflect.annotation.ExceptionProxy;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -32,10 +31,13 @@ public class Server {
     public void connect() {
         try {
             if (!this.comServer.connectAll(true)) {
+                System.err.println("It looks like there is a problem connecting with clients. \n" +
+                        "* Check if your clients are running.\n" +
+                        "* Check your configurations.\n");
                 Platform.exit(Platform.CONNECTION_ERROR);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
 

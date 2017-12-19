@@ -1,5 +1,11 @@
-package ir.pint.soltoon.soltoongame.shared.data.map;
+package ir.pint.soltoon.soltoongame.shared.map;
 
+
+import ir.pint.soltoon.soltoongame.server.manager.khadangs.Cannon;
+import ir.pint.soltoon.soltoongame.server.manager.khadangs.Castle;
+import ir.pint.soltoon.soltoongame.server.manager.khadangs.Giant;
+import ir.pint.soltoon.soltoongame.server.manager.khadangs.Musketeer;
+import ir.pint.soltoon.utils.shared.facades.reflection.PrivateCallMethod;
 
 /**
  * This Enum helps you get information about different fighter types.
@@ -7,7 +13,9 @@ package ir.pint.soltoon.soltoongame.shared.data.map;
  * @author Payam Mohammadi
  * @since 1.0.0
  */
-public enum FighterType {
+
+// final
+public enum KhadangType {
     MUSKETEER,
     CANNON,
     GIANT,
@@ -18,7 +26,7 @@ public enum FighterType {
      *
      * @return Initial HP
      */
-    public Integer getHP() {
+    public Integer getHealth() {
         switch (this) {
             case MUSKETEER:
                 return 100;
@@ -66,17 +74,18 @@ public enum FighterType {
         return null;
     }
 
-    public GameObject getFactory(Long id) {
+    @PrivateCallMethod
+    private GameKhadang getFactory(Long id, Long owner) {
 
         switch (this) {
             case MUSKETEER:
-                return new Musketeer(id);
+                return new Musketeer(id, owner);
             case CASTLE:
-                return new Castle(id);
+                return new Castle(id,owner);
             case CANNON:
-                return new Cannon(id);
+                return new Cannon(id,owner);
             case GIANT:
-                return new Giant(id);
+                return new Giant(id,owner);
         }
         return null;
     }
@@ -136,7 +145,7 @@ public enum FighterType {
         return getCost() / 2;
     }
 
-    public static FighterType getRandomType() {
+    public static KhadangType getRandomType() {
         int i = (int) ((Math.random() - 1e-10) * values().length);
         return values()[i];
     }

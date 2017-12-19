@@ -64,10 +64,10 @@ public class SuiFighter extends JComponent {
             graphics.drawImage(image.getScaledInstance(getImageSize(), getImageSize(), Image.SCALE_SMOOTH), getImageX(), getImageY(), getImageSize(), getImageSize(), null);
 
 //            graphics.setColor(Color.decode("#F97063"));
-//            graphics.fillRect(0, getHeight() - 7, ((int) (getWidth() * getRestingTimePercentage())), 3);
+//            graphics.fillRect(0, getMapHeight() - 7, ((int) (getMapWidth() * getRestingTimePercentage())), 3);
 //
 //            graphics.setColor(Color.decode("#F8C36C"));
-//            graphics.fillRect(0, getHeight() - 4, (int) (getWidth() * getReloadingTimePrecentage()), 3);
+//            graphics.fillRect(0, getMapHeight() - 4, (int) (getMapWidth() * getReloadingTimePrecentage()), 3);
 
 
             if (getWidth() < 50) {

@@ -1,4 +1,4 @@
-package ir.pint.soltoon.soltoongame.server;
+package ir.pint.soltoon.soltoongame.server.sync;
 
 import ir.pint.soltoon.soltoongame.shared.result.AgentAddEvent;
 import ir.pint.soltoon.soltoongame.shared.result.AgentDiedEvent;
@@ -7,8 +7,6 @@ import ir.pint.soltoon.soltoongame.shared.result.AgentShootEvent;
 import ir.pint.soltoon.utils.shared.facades.result.EventLog;
 import ir.pint.soltoon.utils.shared.facades.result.MetaLog;
 import ir.pint.soltoon.utils.shared.facades.result.ResultHandler;
-
-import java.awt.event.ActionEvent;
 
 public class JavadTypeResultHandler implements ResultHandler {
     private String result = "";
