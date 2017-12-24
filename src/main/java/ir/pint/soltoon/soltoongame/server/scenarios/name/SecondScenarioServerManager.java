@@ -1,7 +1,7 @@
 package ir.pint.soltoon.soltoongame.server.scenarios.name;
 
 import ir.pint.soltoon.soltoongame.server.manager.ManagerGame;
-import ir.pint.soltoon.soltoongame.server.Server;
+import ir.pint.soltoon.soltoongame.server.ServerComminucation;
 import ir.pint.soltoon.soltoongame.server.ServerManager;
 import ir.pint.soltoon.soltoongame.shared.agents.Soltoon;
 
@@ -17,7 +17,7 @@ public class SecondScenarioServerManager extends ServerManager {
     private LinkedList<Long> fighters = new LinkedList<>();
     private Map<Long, Long> playerByFighter = new HashMap<>();
 
-    public SecondScenarioServerManager(Server server, int width, int height) {
+    public SecondScenarioServerManager(ServerComminucation server, int width, int height) {
         this.server = server;
         this.players = 1;
         this.width = width;
@@ -35,7 +35,7 @@ public class SecondScenarioServerManager extends ServerManager {
     //
 //    @Override
 //    public void run() {
-//        initiateClients();
+//        initiateExternalClients();
 //
 //        ResultStorage.putMisc("rounds", this.rounds);
 //        ResultStorage.putMisc("mapWidth", this.width);
@@ -56,17 +56,17 @@ public class SecondScenarioServerManager extends ServerManager {
 //
 //
 //    private void sendExitSignal() {
-//        Set<Long> players = server.getClients().keySet();
+//        Set<Long> players = filters.getClients().keySet();
 //
 //        for (Long player : players) {
 //            QueryExit queryExit = new QueryExit(player, null);
-//            server.query(queryExit, player, GameConfiguration.EXIT_QUERY_TIME);
+//            filters.query(queryExit, player, GameConfiguration.EXIT_QUERY_TIME);
 //        }
 //    }
 //
 //
 //    private void queryPlayers() {
-//        Set<Long> players = server.getClients().keySet();
+//        Set<Long> players = filters.getClients().keySet();
 //
 //        for (Long player : players) {
 //            boolean skipPlayer = false;
@@ -77,7 +77,7 @@ public class SecondScenarioServerManager extends ServerManager {
 //            while (!skipPlayer) {
 //
 //                QueryAction queryAction = new QueryAction(player, gameBoard);
-//                Command command = server.query(queryAction, player, GameConfiguration.QUERY_WAIT_TIME);
+//                Command command = filters.query(queryAction, player, GameConfiguration.QUERY_WAIT_TIME);
 //
 //                if (command == null)
 //                    command = new CommandNothing();
@@ -105,7 +105,7 @@ public class SecondScenarioServerManager extends ServerManager {
 //                if (!commandSuccessful) {
 //                    result = new ResultAction(player, Status.FAILURE);
 //                }
-//                server.sendResult(result, command, player);
+//                filters.sendResult(result, command, player);
 //            }
 //        }
 //    }

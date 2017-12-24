@@ -23,8 +23,8 @@ public class GameConfiguration {
     public static int BOARD_WIDTH = 10;
     public static int BOARD_HEIGHT = 10;
 
-    public static int PLAYERS_INITIAL_MONEY = 0;
-    public static int PLAYERS_TURN_MONERY = 5;
+    public static int PLAYERS_INITIAL_MONEY = 1000;
+    public static int PLAYERS_TURN_MONERY = 50;
 
 
     public static int DEFAULT_CLIENTS_COUNT = 1;

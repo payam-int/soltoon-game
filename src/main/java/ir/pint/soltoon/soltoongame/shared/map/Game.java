@@ -99,7 +99,7 @@ public class Game {
 
         cellId = cellId % size;
 
-        return cells[cellId / cells.length][cellId % cells.length];
+        return cells[cellId / cells.length][cellId % cells[0].length];
     }
 
     public GameSoltoon getOwner(Long id) {

@@ -1,5 +1,6 @@
 package ir.pint.soltoon.soltoongame.shared.agents;
 
+import ir.pint.soltoon.soltoongame.shared.communication.command.Command;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
 import ir.pint.soltoon.soltoongame.shared.actions.Action;
 import ir.pint.soltoon.soltoongame.shared.map.Game;
@@ -26,7 +27,7 @@ public abstract class Agent implements Serializable, TimeAwareBean {
 
     public abstract Action getAction(Game gb);
 
-    public void recieveResults(Result result) {
+    public void recieveResults(Result result, Command command) {
 
     }
 

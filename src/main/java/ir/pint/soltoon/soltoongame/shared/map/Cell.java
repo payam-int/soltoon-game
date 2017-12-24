@@ -44,6 +44,9 @@ public class Cell extends GameAwareElement {
             this.khadangId = -1L;
     }
 
+    public boolean hasKhadang() {
+        return khadangId >= 0;
+    }
 
     public int getX() {
         return x;
@@ -66,5 +69,27 @@ public class Cell extends GameAwareElement {
         return Math.abs(difX) + Math.abs(difY);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Cell)) return false;
+
+        Cell cell = (Cell) object;
+
+        if (!x.equals(cell.x)) return false;
+        return y.equals(cell.y);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "id=" + id +
+                ", x=" + x +
+                ", y=" + y +
+                ", blocked=" + blocked +
+                ", khadangId=" + khadangId +
+                '}';
+    }
 }
 

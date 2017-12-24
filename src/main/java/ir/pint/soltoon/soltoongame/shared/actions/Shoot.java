@@ -26,13 +26,15 @@ public final class Shoot extends Action {
 
         ManagerCell target = (ManagerCell) gb.getCell(x, y);
 
+
         if (target == null)
             return true;
-
         if (target.getDistance(khadang.getCell()) > type.getShootingRange())
             return true;
-
-
+        if (!((ManagerGameSoltoon) khadang.getOwner()).isMaster()) {
+            if (khadang.getRemainingReloadingTime() > 0)
+                return true;
+        }
         khadang.resetReloadingTime();
 
         int fromX = khadang.getCell().getX();
@@ -51,7 +53,7 @@ public final class Shoot extends Action {
 
                 ManagerGameSoltoon targetOwner = (ManagerGameSoltoon) targetKhadang.getOwner();
                 targetOwner.changeScore(-targetKhadang.getType().getDeathPenalty());
-                ResultStorage.addEvent(new AgentDiedEvent(targetKhadang.getId(), x, y, damage, targetKhadang.getOwner().getId(), khadang.getOwner().getId()));
+                ResultStorage.addEvent(new AgentDiedEvent(targetKhadang.getId(), x, y, targetKhadang.getType().getDeathPenalty(), targetKhadang.getOwner().getId(), khadang.getOwner().getId()));
 
             }
             ResultStorage.addEvent(new AgentDamagedEvent(targetKhadang.getId(), targetKhadang.getOwner().getId(), khadang.getOwner().getId(), damage, khadang.getHealth(), target.getX(), target.getY()));

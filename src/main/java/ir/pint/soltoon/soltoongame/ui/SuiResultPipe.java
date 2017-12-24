@@ -14,7 +14,7 @@ public class SuiResultPipe implements ResultHandler {
     private SuiManager suiManager;
 
     private int playersJoined = 0;
-    private AtomicInteger playerDependencies = new AtomicInteger(1);
+    private AtomicInteger playerDependencies = new AtomicInteger(0);
     private AtomicInteger mapDependencies = new AtomicInteger(4);
 
     public SuiResultPipe(SuiManager suiManager) {
@@ -31,7 +31,8 @@ public class SuiResultPipe implements ResultHandler {
                 SuiPlayer suiPlayer = new SuiPlayer(e.getId(), e.getRemoteInfo(), e.getInitialMoney());
                 suiManager.addPlayer(suiPlayer);
 
-                if (playerDependencies.decrementAndGet() < 1) {
+
+                if (mapDependencies.get() < 1 && playerDependencies.decrementAndGet() <= -suiManager.getSuiConfiguration().getPlayers()) {
                     suiManager.playerDependenciesResolved();
                 }
             } else if (eventLog instanceof AgentAddEvent) {
@@ -62,7 +63,7 @@ public class SuiResultPipe implements ResultHandler {
                 suiManager.addStep(suiActionDamage);
             } else if (eventLog instanceof GameEndedEvent) {
                 suiManager.getSuiConfiguration().setEndEventRecieved(true);
-            }else if (eventLog instanceof RoundStartEvent){
+            } else if (eventLog instanceof RoundStartEvent) {
                 RoundStartEvent e = (RoundStartEvent) eventLog;
                 SuiNextRound suiNextRound = new SuiNextRound(e.getRound(), e.getMoneyByPlayer());
                 suiManager.addStep(suiNextRound);

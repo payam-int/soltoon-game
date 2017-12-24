@@ -1,7 +1,7 @@
 package ir.pint.soltoon.soltoongame.server;
 
-import ir.pint.soltoon.soltoongame.server.scenarios.free.FreeServerManager;
-import ir.pint.soltoon.soltoongame.server.scenarios.helloWorld.FirstScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.freeWorld.FreeWorldServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.helloWorld.HelloWorldServerManager;
 import ir.pint.soltoon.soltoongame.server.scenarios.name.SecondScenarioServerManager;
 import ir.pint.soltoon.soltoongame.server.sync.JavadTypeResultHandler;
 import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
@@ -35,8 +35,8 @@ public class ServerRunner {
     public static void runTwoPlayers() {
         GameConfiguration.NUMBER_OF_PLAYERS = 2;
 
-        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
-        ResultStorage.addResultHandler(javadTypeResultHandler);
+//        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
+//        ResultStorage.addResultHandler(javadTypeResultHandler);
 
 
         run(Arrays.asList(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.DEFAULT_REMOTE_INFO2), ServerMode.GUI);
@@ -49,7 +49,7 @@ public class ServerRunner {
 
     public static void run(List<ComRemoteInfo> remoteInfos, ServerMode serverMode) {
 
-        // rebound communication between server and clients.
+        // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfos);
 
         if (serverMode == ServerMode.GUI) {
@@ -57,35 +57,35 @@ public class ServerRunner {
         }
 
         // CREATE comminucation wrapper
-        Server server = new Server(comServer);
+        ServerComminucation server = new ServerComminucation(comServer);
 
         // start judge
-        ServerManager serverManager = new FreeServerManager(server);
+        ServerManager serverManager = new FreeWorldServerManager(server);
         serverManager.run();
 
         Platform.exit(Platform.OK);
     }
 
 
-    public static void runFirstScenario() {
-        runFirstScenario(GameConfiguration.DEFAULT_REMOTE_INFO);
+    public static void runHelloWorld() {
+        runHelloWorld(GameConfiguration.DEFAULT_REMOTE_INFO);
     }
 
-    public static void runFirstScenario(ComRemoteInfo comRemoteInfo) {
-        runFirstScenario(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.BOARD_WIDTH, GameConfiguration.BOARD_HEIGHT);
+    public static void runHelloWorld(ComRemoteInfo comRemoteInfo) {
+        runHelloWorld(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.BOARD_WIDTH, GameConfiguration.BOARD_HEIGHT);
     }
 
-    public static void runFirstScenario(ComRemoteInfo remoteInfo, int width, int height) {
-        // rebound communication between server and clients.
+    public static void runHelloWorld(ComRemoteInfo remoteInfo, int width, int height) {
+        // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfo);
 
         GUIRunner.openGUI();
 
         // CREATE comminucation wrapper
-        Server server = new Server(comServer);
+        ServerComminucation server = new ServerComminucation(comServer);
 
         // start judge
-        ServerManager serverManager = new FirstScenarioServerManager(server, width, height);
+        ServerManager serverManager = new HelloWorldServerManager(server, width, height);
         serverManager.run();
 
         Platform.exit(Platform.OK);
@@ -96,13 +96,13 @@ public class ServerRunner {
     }
 
     public static void runSecondScenario(ComRemoteInfo remoteInfo, int width, int height) {
-        // rebound communication between server and clients.
+        // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfo);
 
         GUIRunner.openGUI();
 
         // CREATE comminucation wrapper
-        Server server = new Server(comServer);
+        ServerComminucation server = new ServerComminucation(comServer);
 
         // start judge
         ServerManager serverManager = new SecondScenarioServerManager(server, width, height);

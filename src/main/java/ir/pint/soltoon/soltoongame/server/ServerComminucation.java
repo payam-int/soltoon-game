@@ -16,7 +16,7 @@ import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-public class Server {
+public class ServerComminucation {
 
     private int port;
     private ServerSocket serverSocket;
@@ -24,7 +24,7 @@ public class Server {
     private HashMap<Long, Comminucation> clients = new HashMap<>();
     private Hashtable<ComRemoteInfo, Comminucation> comminucations = new Hashtable<>();
 
-    Server(ComServer comServer) {
+    ServerComminucation(ComServer comServer) {
         this.comServer = comServer;
     }
 

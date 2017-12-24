@@ -20,13 +20,13 @@ public enum Direction {
     public int yDifference() {
         switch (this) {
             case DOWN:
-                return -1;
+                return 1;
             case LEFT:
                 return 0;
             case RIGHT:
                 return 0;
             case UP:
-                return 1;
+                return -1;
         }
         return 0;
     }

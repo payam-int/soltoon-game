@@ -26,10 +26,7 @@ public class ManagerCell extends Cell {
 
     public void assignKhadang(ManagerGameKhadang khadang) {
         setKhadang(khadang);
-
-        if (khadang != null) {
-            khadang.setCell(this);
-        }
+        khadang.setCell(this);
     }
 
 

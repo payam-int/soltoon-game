@@ -11,7 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: ir.pint.soltoon:containers:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: ir.pint.soltoon:containers:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: ir.pint.gson:gson-fire:1.8.2" level="project" />
   </component>

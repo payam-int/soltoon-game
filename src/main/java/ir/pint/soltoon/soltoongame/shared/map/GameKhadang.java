@@ -13,7 +13,7 @@ public abstract class GameKhadang extends GameAwareElement {
     protected Integer health;
 
     private transient GameSoltoon owner;
-    private transient Cell cell;
+    protected transient Cell cell;
 
 
     protected GameKhadang(Long id, Long ownerId, KhadangType fighterType) {
@@ -61,8 +61,15 @@ public abstract class GameKhadang extends GameAwareElement {
     }
 
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof GameKhadang)) return false;
 
+        GameKhadang that = (GameKhadang) object;
 
+        return id.equals(that.id);
+    }
 
     @Override
     public String toString() {

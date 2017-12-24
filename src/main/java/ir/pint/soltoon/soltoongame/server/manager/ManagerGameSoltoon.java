@@ -8,9 +8,11 @@ import ir.pint.soltoon.utils.shared.facades.json.SerializeAs;
 import java.util.LinkedList;
 
 @SerializeAs(GameSoltoon.class)
-public class ManagerGameSoltoon extends GameSoltoon {
+public class ManagerGameSoltoon extends GameSoltoon implements Comparable<ManagerGameSoltoon> {
     protected Integer moneyPerTurn;
     protected Integer money;
+    protected Integer weight = 0;
+    protected boolean master = false;
 
     public int getMoney() {
         return money;
@@ -82,5 +84,26 @@ public class ManagerGameSoltoon extends GameSoltoon {
 
         khadangsId.add(khadang.getId());
         khadangs.add(khadang);
+    }
+
+    @Override
+    public int compareTo(ManagerGameSoltoon managerGameSoltoon) {
+        return this.weight - managerGameSoltoon.weight;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public boolean isMaster() {
+        return master;
+    }
+
+    public void setMaster(boolean master) {
+        this.master = master;
     }
 }

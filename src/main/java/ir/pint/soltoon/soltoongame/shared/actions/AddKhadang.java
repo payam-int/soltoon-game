@@ -15,9 +15,9 @@ import ir.pint.soltoon.utils.shared.facades.result.ResultStorage;
  *
  */
 public final class AddKhadang extends Action {
-    private transient Khadang khadang;
     private int x, y;
     private KhadangType type;
+    private transient Khadang khadang;
 
     public AddKhadang(Khadang khadang, int x, int y) {
         this.khadang = khadang;
@@ -37,18 +37,20 @@ public final class AddKhadang extends Action {
             return true; // por nabashe yevaght
         }
 
-        if (soltoon.getMoney() - type.getCost() < 0) {
-            return true; // pool bashe
-        }
-
-        boolean ok = true;
-        for (GameKhadang khadang : gameBoard.getKhadangs().values()) {
-            if (cell.getDistance(khadang.getCell()) <= type.getShootingRange()) {
-                ok = false;
+        if (!soltoon.isMaster()) {
+            if (soltoon.getMoney() - type.getCost() < 0) {
+                return true; // pool bashe
             }
-        }
 
-        if (!ok) return true;
+            boolean ok = true;
+            for (GameKhadang khadang : gameBoard.getKhadangs().values()) {
+                if (cell.getDistance(khadang.getCell()) <= type.getShootingRange()) {
+                    ok = false;
+                }
+            }
+
+            if (!ok) return true;
+        }
 
         soltoon.changeMoney(type.getCost());
         soltoon.changeScore(type.getCreatePoint());
@@ -77,5 +79,12 @@ public final class AddKhadang extends Action {
         return y;
     }
 
-
+    @Override
+    public String toString() {
+        return "AddKhadang{" +
+                "type=" + type +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

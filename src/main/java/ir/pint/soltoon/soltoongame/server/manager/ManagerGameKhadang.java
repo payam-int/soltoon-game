@@ -51,6 +51,7 @@ public class ManagerGameKhadang extends GameKhadang {
 
     public void setCell(Cell cell) {
         this.cellId = cell.getId();
+        this.cell = cell;
     }
 
     @Override

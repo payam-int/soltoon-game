@@ -1,5 +1,6 @@
 package ir.pint.soltoon.soltoongame.client;
 
+import ir.pint.soltoon.soltoongame.shared.communication.command.Command;
 import ir.pint.soltoon.soltoongame.shared.communication.command.CommandAction;
 import ir.pint.soltoon.soltoongame.shared.communication.query.QueryAction;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
@@ -9,9 +10,12 @@ import ir.pint.soltoon.soltoongame.shared.actions.Action;
 import ir.pint.soltoon.soltoongame.shared.map.Game;
 import ir.pint.soltoon.utils.clients.proxy.DefaultTimeAwareBean;
 
-public class ClientExecutor extends DefaultTimeAwareBean implements ClientExecutorInterface {
+public class Client extends DefaultTimeAwareBean implements ClientInterface {
     @Override
     public CommandAction queryAction(QueryAction query, Agent agent) {
+        if (agent == null)
+            return null;
+
         agent.setParentBean(this);
         agent.setId(query.getId());
         CommandAction command = null;
@@ -23,6 +27,7 @@ public class ClientExecutor extends DefaultTimeAwareBean implements ClientExecut
             e.printStackTrace();
         }
         command = new CommandAction(query.getId(), action);
+        command.setAgent(agent);
         return command;
     }
 
@@ -33,9 +38,9 @@ public class ClientExecutor extends DefaultTimeAwareBean implements ClientExecut
     }
 
     @Override
-    public void recieveResults(Result commandResult, Agent agent) {
+    public void recieveResults(Result result, Command command, Agent agent) {
         agent.setParentBean(this);
-        agent.recieveResults(commandResult);
+        agent.recieveResults(result, command);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class ClientRunner {
 
     public static void run(Class<? extends Soltoon> player, ComRemoteConfig remoteConfig) {
         Comminucation connect = ComClient.connect(remoteConfig, 5000);
-        ClientManager clientManager = new ClientManager(player, connect);
+        NetworkClientManager clientManager = new NetworkClientManager(player, connect);
         clientManager.run();
         Platform.exit(Platform.OK);
     }

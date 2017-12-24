@@ -93,13 +93,13 @@ public enum KhadangType {
     public Integer getCost() {
         switch (this) {
             case CANNON:
-                return 10;
-            case GIANT:
-                return 3;
-            case CASTLE:
                 return 100;
+            case GIANT:
+                return 30;
+            case CASTLE:
+                return 1000;
             case MUSKETEER:
-                return 1;
+                return 10;
         }
         return null;
     }
