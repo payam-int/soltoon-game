@@ -198,4 +198,8 @@ public class SuiConfiguration {
     public void setEndEventRecieved(boolean endEventRecieved) {
         this.endEventRecieved = endEventRecieved;
     }
+
+    public int getPlayers() {
+        return players;
+    }
 }
