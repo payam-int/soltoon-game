@@ -36,11 +36,13 @@ public final class AddKhadang extends Action {
         ManagerCell cell = (ManagerCell) gameBoard.getCell(x, y);
 
         if (cell == null || cell.hasKhadang()) {
+//            System.out.println("POR"+cell);
             return true; // por nabashe yevaght
         }
 
         if (!soltoon.isMaster()) {
             if (soltoon.getMoney() - type.getCost() < 0) {
+//                System.out.println("BIPOOLI");
                 return true; // pool bashe
             }
 
@@ -49,10 +51,16 @@ public final class AddKhadang extends Action {
                 double coeff = khadang.getOwner().equals(soltoon) ? GameConfiguration.FRIEND_COEEF : 1;
                 if (cell.getDistance(khadang.getCell()) <= khadang.getType().getShootingRange() * coeff) {
                     ok = false;
+//                    System.out.println(khadang.getCell());
+//                    System.out.println(cell.getDistance(khadang.getCell()));
                 }
             }
 
-            if (!ok) return true;
+            if (!ok) {
+//                System.out.println("INRANGE");
+//                System.out.println(cell);
+                return true;
+            }
         }
 
         soltoon.changeMoney(-type.getCost());

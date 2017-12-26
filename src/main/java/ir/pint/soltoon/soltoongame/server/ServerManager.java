@@ -73,11 +73,11 @@ public abstract class ServerManager {
 
         if (command != null && command instanceof CommandInitialize) {
             ResultInitialize resultInitialize = new ResultInitialize(client, Status.SUCCESS);
-            sendResult(resultInitialize, command, client);
+            sendResult(resultInitialize, command, queryInitialize, client);
             return addClient(client, initialScore, turnMoney, initialMoney);
         } else {
             ResultInitialize resultInitialize = new ResultInitialize(client, Status.FAILURE);
-            sendResult(resultInitialize, command, client);
+            sendResult(resultInitialize, command, queryInitialize, client);
 
             ResultStorage.addException(new ClientInitializationException(client));
 
@@ -112,9 +112,9 @@ public abstract class ServerManager {
         return server.query(query, client, queryWaitTime);
     }
 
-    protected void sendResult(Result result, Command command, Long client) {
+    protected void sendResult(Result result, Command command, Query query, Long client) {
         if (localClients.containsKey(client))
-            localClients.get(client).handleResult(command, result);
+            localClients.get(client).handleResult(query, command, result);
         server.sendResult(result, command, client);
     }
 
@@ -186,9 +186,12 @@ public abstract class ServerManager {
             }
 
             if (!commandSuccessful) {
+//                System.out.println(command);
+//                System.out.println(queryAction);
+//                System.out.println(gameBoard);
                 result = new ResultAction(soltoon.getId(), Status.FAILURE);
             }
-            sendResult(result, command, soltoon.getId());
+            sendResult(result, command, queryAction, soltoon.getId());
 
             if (!skipPlayer)
                 soltoonsToQuery.add(soltoon);
@@ -252,7 +255,7 @@ public abstract class ServerManager {
                 result = new ResultAction(khadangOwner, Status.FAILURE);
             }
 
-            sendResult(result, command, khadangOwner);
+            sendResult(result, command, queryAction, khadangOwner);
         }
     }
 

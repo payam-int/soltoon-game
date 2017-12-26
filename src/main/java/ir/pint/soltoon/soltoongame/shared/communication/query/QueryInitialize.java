@@ -6,7 +6,6 @@ import ir.pint.soltoon.soltoongame.shared.map.Game;
  * Created by amirkasra on 9/30/2017 AD.
  */
 public class QueryInitialize extends Query {
-    private Game gameBoard;
 
     public QueryInitialize(Long id) {
         super(id);

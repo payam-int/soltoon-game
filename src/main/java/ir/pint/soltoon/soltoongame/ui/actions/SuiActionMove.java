@@ -59,4 +59,9 @@ public class SuiActionMove extends SuiAction {
         fighter.setBoardY(y);
         fighter.rebound();
     }
+
+    @Override
+    public boolean sleep() {
+        return true;
+    }
 }

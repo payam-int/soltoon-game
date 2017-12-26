@@ -74,17 +74,14 @@ public class Game {
     public Cell getCell(Cell center, Direction direction) {
 
         int x = center.getX() + direction.xDifference(), y = center.getY() + direction.yDifference();
-        if (x < 0 || x > mapWidth || y < 0 || y > mapWidth)
-            return null;
-        else
-            return getCell(x, y);
+
+        return getCell(x, y);
     }
 
 
     public Cell getCell(Integer x, Integer y) {
         if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
             return cells[x][y];
-
         return null;
     }
 
@@ -99,7 +96,7 @@ public class Game {
 
         cellId = cellId % size;
 
-        return cells[cellId / cells.length][cellId % cells[0].length];
+        return cells[cellId / cells[0].length][cellId % cells[0].length];
     }
 
     public GameSoltoon getOwner(Long id) {

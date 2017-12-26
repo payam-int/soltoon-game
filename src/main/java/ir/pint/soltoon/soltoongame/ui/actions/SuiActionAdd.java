@@ -63,5 +63,8 @@ public class SuiActionAdd extends SuiAction {
         }
     }
 
-
+    @Override
+    public boolean sleep() {
+        return true;
+    }
 }

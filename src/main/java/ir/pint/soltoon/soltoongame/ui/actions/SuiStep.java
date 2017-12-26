@@ -6,4 +6,6 @@ public interface SuiStep {
     void apply(SuiManager suiManager);
 
     void revert(SuiManager suiManager);
+
+    boolean sleep();
 }

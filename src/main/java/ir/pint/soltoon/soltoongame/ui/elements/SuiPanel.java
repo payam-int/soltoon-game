@@ -18,6 +18,8 @@ public class SuiPanel extends JPanel {
     private SuiManager suiManager;
     private Box playersBox;
 
+    private JLabel roundbox = new JLabel();
+
     public SuiPanel(SuiManager suiManager) {
         this.suiManager = suiManager;
 
@@ -26,9 +28,9 @@ public class SuiPanel extends JPanel {
 
         SuiConfiguration suiConfiguration = suiManager.getSuiConfiguration();
 
-        setSize(suiConfiguration.getPanelWidth(), suiConfiguration.getMapHeight());
+        setSize(suiConfiguration.getPanelWidth(), suiConfiguration.getFrameHeight());
 
-        setMaximumSize(new Dimension(suiConfiguration.getPanelWidth(), suiConfiguration.getMapHeight()));
+        setMaximumSize(new Dimension(suiConfiguration.getPanelWidth(), suiConfiguration.getFrameHeight()));
 
         Box controlsBox = Box.createHorizontalBox();
         controlsBox.add(new SuiPrevTurnButton());
@@ -59,8 +61,15 @@ public class SuiPanel extends JPanel {
         add(controlsBox);
         add(Box.createRigidArea(new Dimension(0, 40)));
 
+        roundbox.setText("Round: (0/0)");
+
+        add(roundbox);
         add(Box.createRigidArea(new Dimension(0, 20)));
         add(playersBox);
+    }
+
+    public void setRound(int round, int rounds) {
+        roundbox.setText(String.format("Round (%d/%d)", round, rounds));
     }
 
     public Box getPlayersBox() {

@@ -76,6 +76,7 @@ public abstract class GameKhadang extends GameAwareElement {
         return "GameObject{" +
                 "id=" + id +
                 ", cell=" + getCell() +
+                ", cellId=" + cellId +
                 ", type=" + type +
                 ", health=" + health +
                 ", remainingRestingTime=" + remainingRestingTime +

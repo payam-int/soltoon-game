@@ -25,16 +25,8 @@ public class MyKing extends Soltoon {
 
     @Override
     public Action getAction(Game gameBoard) {
-
-        int x = 0;
-        int y = 0;
-        while (gameBoard.getCell(x, y).hasKhadang()) {
-            x = (int) (Math.random() * GameConfiguration.BOARD_WIDTH);
-            y = (int) (Math.random() * GameConfiguration.BOARD_HEIGHT);
-        }
-
-        return new AddKhadang(new MyGiant(), x, y);
-
+        System.out.println(gameBoard);
+        return null;
     }
 }
 

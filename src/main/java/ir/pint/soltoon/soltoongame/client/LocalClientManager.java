@@ -16,7 +16,7 @@ public class LocalClientManager extends ClientManager {
     }
 
     @Override
-    public void handleResult(Command command, Result commandResult) {
-        super.handleResult(command, commandResult);
+    public void handleResult(Query query, Command command, Result commandResult) {
+        super.handleResult(query, command, commandResult);
     }
 }

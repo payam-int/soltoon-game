@@ -67,7 +67,7 @@ public class NetworkClientManager extends ClientManager {
 
 
                 Result commandResult = (Result) comInputStream.readObject();
-                handleResult(command, commandResult);
+                handleResult(query, command, commandResult);
             }
         } catch (Exception e) {
             ResultStorage.addException(e);

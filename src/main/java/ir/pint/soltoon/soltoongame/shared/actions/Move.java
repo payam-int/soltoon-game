@@ -17,24 +17,27 @@ public final class Move extends Action {
 
     protected boolean execute(ManagerGame gameboard, ManagerGameKhadang khadang) {
 
-
-        if (khadang == null)
+        if (khadang == null) {
             return true; //age yevaght GameObject nabud
+        }
 
         if (!((ManagerGameSoltoon) khadang.getOwner()).isMaster()) {
-            if (khadang.getRemainingRestingTime() != 0)
+            if (khadang.getRemainingRestingTime() != 0) {
                 return true;
+            }
         }
 
 
         ManagerCell currentCell = (ManagerCell) khadang.getCell();
         ManagerCell newCell = (ManagerCell) gameboard.getCell(currentCell, direction);
 
-        if (newCell == null)
+        if (newCell == null) {
             return true;
+        }
 
-        if (newCell.getKhadang() != null)
+        if (newCell.getKhadang() != null) {
             return true;
+        }
 
         gameboard.moveKhadang(khadang, newCell);
 

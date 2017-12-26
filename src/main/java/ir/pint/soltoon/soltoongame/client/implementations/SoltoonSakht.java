@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class SoltoonSanjar extends Soltoon {
+public class SoltoonSakht extends Soltoon {
     private static final double MUSKTEER_PERCENTAGE = 0.5;
     private static final double GIANT_PERCENTAGE = 0.2;
     private static final double CANNON_PERCENTAGE = 0.3;
@@ -44,27 +44,25 @@ public class SoltoonSanjar extends Soltoon {
             int kx = khadang.getCell().getX();
             int ky = khadang.getCell().getY();
 
-
-            Integer range = khadang.getType().getShootingRange() + 1;
-            for (int i = -range + 1; i < range; i++) {
+            Integer range = khadang.getType().getShootingRange();
+            for (int i = -range; i <= range; i++) {
                 int jMax = range - Math.abs(i);
-                for (int j = -jMax + 1; j < jMax; j++) {
+                for (int j = -jMax; j <= jMax; j++) {
                     if (gb.getCell(i + kx, j + ky) != null) {
                         if (!mapEq[i + kx][j + ky])
                             free--;
 
                         mapEq[i + kx][j + ky] = true;
-                    }
-                    if (gb.getCell(j + kx, i + ky) != null) {
-                        if (!mapEq[j + kx][i + ky])
-                            free--;
-
-                        mapEq[j + kx][i + ky] = true;
+                    } else {
+//                        System.out.println("NULL@"+(i + kx)+":"+(j + ky));
                     }
                 }
             }
         }
 
+        for (int i = 0; i < mapEq.length; i++) {
+//            System.out.println(Arrays.toString(mapEq[i]));
+        }
 
         if (free == 0)
             return null;
@@ -88,6 +86,8 @@ public class SoltoonSanjar extends Soltoon {
 
         if (x == -1)
             return null;
+
+//        System.out.println(gb.getCell(x, y));
 
         if (soltoon.getMoney() > KhadangType.CASTLE.getCost() * 2 ||
                 distancePow2 < 6 && soltoon.getMoney() > KhadangType.CASTLE.getCost()) {
@@ -138,7 +138,6 @@ class KillNearestKhadang extends Khadang {
 
     @Override
     public void init(Game gameBoard) {
-
     }
 
     @Override
@@ -252,7 +251,6 @@ class FollowAndKillNearestKhadang extends KillNearestKhadang {
 
     @Override
     public void init(Game gameBoard) {
-
     }
 
     @Override
@@ -262,9 +260,10 @@ class FollowAndKillNearestKhadang extends KillNearestKhadang {
 
     @Override
     public Action getAction(Game gb) {
-        GameKhadang nearestKhadang = getNearestKhadang(gb);
         GameKhadang me = gb.getKhadang(getId());
         Cell cell = me.getCell();
+        GameKhadang nearestKhadang = getNearestKhadang(gb);
+
         if (nearestKhadang == null) {
             return new Move(Direction.get(((int) (Math.random() * 4))));
         }
@@ -272,11 +271,13 @@ class FollowAndKillNearestKhadang extends KillNearestKhadang {
         if (nearestKhadang.getCell().getDistance(cell) > me.getType().getShootingRange()) {
             Direction bfs = bfs(me.getCell(), nearestKhadang.getCell(), gb);
             if (bfs != null) {
+
                 return new Move(bfs);
             }
         }
 
         Cell cell1 = nearestKhadang.getCell();
+
 
         return new Shoot(cell1.getX(), cell1.getY());
     }

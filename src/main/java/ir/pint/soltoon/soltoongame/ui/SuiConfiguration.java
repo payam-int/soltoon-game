@@ -21,6 +21,8 @@ public class SuiConfiguration {
     public static Font HEAD_FONT;
     public static Font TEXT_FONT;
 
+    private int round = 0;
+
     static {
         try {
             GraphicsEnvironment ge =
@@ -55,7 +57,7 @@ public class SuiConfiguration {
 
 
     static {
-        palleteColors.addAll(Arrays.asList(Color.decode("#BF0845"), Color.decode("#233140"), Color.decode("#BA6723"), Color.decode("#62895e")));
+        palleteColors.addAll(Arrays.asList(Color.decode("#FFAA1C"), Color.decode("#233140"), Color.decode("#BA6723"), Color.decode("#62895e")));
     }
 
     public Color getPlayerColor(Long player) {
@@ -130,7 +132,7 @@ public class SuiConfiguration {
     }
 
     public int getFrameHeight() {
-        return getMapHeight() + getCellSize() / 2;
+        return Math.max(getMapHeight() + getCellSize() / 2, 500);
     }
 
     public void setBoardWidth(int boardWidth) {
@@ -201,5 +203,17 @@ public class SuiConfiguration {
 
     public int getPlayers() {
         return players;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public int getRounds() {
+        return rounds;
     }
 }

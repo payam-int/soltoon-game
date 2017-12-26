@@ -60,4 +60,9 @@ public class SuiActionShoot extends SuiAction {
     public void revert(SuiManager suiManager) {
 
     }
+
+    @Override
+    public boolean sleep() {
+        return true;
+    }
 }

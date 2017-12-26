@@ -19,7 +19,7 @@ public class SuiGameBoard extends JPanel {
 
     public void initiate() {
         SuiConfiguration suiConfiguration = suiManager.getSuiConfiguration();
-        setBounds(0, 0, suiConfiguration.getMapWidth(), suiConfiguration.getMapHeight());
+        setBounds(0, 0, suiConfiguration.getMapWidth(), suiConfiguration.getFrameHeight());
     }
 
 
@@ -31,11 +31,12 @@ public class SuiGameBoard extends JPanel {
         if (suiConfiguration.isInitiated()) {
             graphics.clearRect(0, 0, getWidth(), getHeight());
             graphics.setColor(Color.decode("#fafafa"));
-            for (int i = 0, k = 0; i < suiConfiguration.getBoardWidth(); i++) {
-                for (int j = 0; j < suiConfiguration.getBoardHeight(); j++, k++) {
-                    graphics.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
-                }
-            }
+            graphics.fillRect(0,0,getWidth(),getHeight());
+//            for (int i = 0, k = 0; i < suiConfiguration.getBoardWidth(); i++) {
+//                for (int j = 0; j < suiConfiguration.getBoardHeight(); j++, k++) {
+//                    graphics.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+//                }
+//            }
 
             graphics.setColor(Color.decode("#eeeeee"));
             for (int i = 0; i < suiConfiguration.getBoardWidth() + 1; i++) {
@@ -45,6 +46,8 @@ public class SuiGameBoard extends JPanel {
             for (int i = 0; i < suiConfiguration.getBoardHeight() + 1; i++) {
                 graphics.drawLine(0, i * cellSize, cellSize * suiConfiguration.getBoardWidth(), i * cellSize);
             }
+            graphics.setColor(Color.decode("#e0e0e0"));
+            graphics.drawLine(0, suiConfiguration.getBoardHeight() * cellSize+1, cellSize * suiConfiguration.getBoardWidth(), suiConfiguration.getBoardHeight() * cellSize+1);
         }
     }
 

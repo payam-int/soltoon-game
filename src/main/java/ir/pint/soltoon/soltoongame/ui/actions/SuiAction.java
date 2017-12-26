@@ -6,6 +6,7 @@ public abstract class SuiAction implements SuiStep {
     protected int x, y;
     protected Long player;
 
+
     public SuiAction() {
     }
 
@@ -37,5 +38,9 @@ public abstract class SuiAction implements SuiStep {
 
     public void setPlayer(Long player) {
         this.player = player;
+    }
+
+    public boolean sleep(){
+        return false;
     }
 }

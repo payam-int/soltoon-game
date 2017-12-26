@@ -43,4 +43,9 @@ public class SuiActionDie extends SuiAction {
             suiPlayer.addScore(penalty);
         }
     }
+
+    @Override
+    public boolean sleep() {
+        return true;
+    }
 }

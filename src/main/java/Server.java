@@ -6,9 +6,9 @@ import ir.pint.soltoon.utils.shared.comminucation.ComOutputStream;
 public class Server {
 
     public static void main(String[] args) {
-//        GameConfiguration.BOARD_WIDTH = 50;
-//        GameConfiguration.BOARD_HEIGHT = 10;
-        ServerRunner.runTwoPlayers();
+        GameConfiguration.BOARD_WIDTH = 10;
+        GameConfiguration.BOARD_HEIGHT = 20;
+        ServerRunner.runHelloWorld();
     }
 
 }

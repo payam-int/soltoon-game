@@ -53,8 +53,9 @@ public class SuiActionDrawer extends JComponent {
 
             g2d.setColor(new Color(20, 20, 20, 96));
             g2d.drawLine(getCellXShoot(currentAction.getX()), getCellYShoot(currentAction.getY()), getCellXShoot(((SuiActionShoot) currentAction).getToX()), getCellYShoot(((SuiActionShoot) currentAction).getToY()));
-            g2d.setColor(Color.decode("#C6574F"));
-            g2d.fillOval(getCellXShoot(((SuiActionShoot) currentAction).getToX()) - 5, getCellYShoot(((SuiActionShoot) currentAction).getToY()) - 5, 12, 12);
+            g2d.setColor(Color.RED);
+            int boxSize = Math.min(cellSize / 3, 8);
+            g2d.fillRect(getCellXShoot(((SuiActionShoot) currentAction).getToX()) - boxSize / 2, getCellYShoot(((SuiActionShoot) currentAction).getToY()) - boxSize / 2, boxSize, boxSize);
 
         } else if (currentAction instanceof SuiActionMove) {
             SuiActionMove e = (SuiActionMove) this.currentAction;
@@ -68,7 +69,7 @@ public class SuiActionDrawer extends JComponent {
             int xAdd = e.getToX() == e.getX() ? 0 : cellSize / -2;
             int yAdd = e.getToY() == e.getY() ? 0 : cellSize / -2;
 
-            g2d.drawLine(getCellXMove(e.getX()), getCellYMove(e.getY()), getCellXMove(e.getToX()) + xAdd, getCellYMove(e.getToY()) + yAdd);
+            g2d.drawLine(getCellXMove(e.getX()), getCellYMove(e.getY()), getCellXMove(e.getToX()), getCellYMove(e.getToY()));
             g2d.setColor(Color.decode("#444444"));
 //            g2d.fillOval(getCellXMove(e.getToX()) - 5 + xAdd, getCellYMove(e.getToY()) - 5 + yAdd, 12, 12);
         } else if (currentAction instanceof SuiActionDie) {

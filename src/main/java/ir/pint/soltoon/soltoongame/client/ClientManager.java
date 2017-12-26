@@ -1,6 +1,7 @@
 package ir.pint.soltoon.soltoongame.client;
 
 import ir.pint.soltoon.soltoongame.shared.Platform;
+import ir.pint.soltoon.soltoongame.shared.agents.Khadang;
 import ir.pint.soltoon.soltoongame.shared.communication.command.*;
 import ir.pint.soltoon.soltoongame.shared.communication.query.*;
 import ir.pint.soltoon.soltoongame.shared.communication.result.Result;
@@ -22,6 +23,7 @@ public abstract class ClientManager {
     public ClientManager(Class<? extends Soltoon> soltoon) {
         this.soltoon = soltoon;
     }
+
     protected Command handleQuery(Query query) {
         Long id = query.getId();
         Agent agent = agents.getOrDefault(id, null);
@@ -62,10 +64,13 @@ public abstract class ClientManager {
         agents.put(id, agent);
     }
 
-    protected void handleResult(Command command, Result commandResult) {
+    protected void handleResult(Query query, Command command, Result commandResult) {
         if (command instanceof CommandAction && ((CommandAction) command).getAction() instanceof AddKhadang) {
             if (commandResult instanceof ResultAddFighterAction && commandResult.getStatus() == Status.SUCCESS) {
-                addAgent(((AddKhadang) ((CommandAction) command).getAction()).getKhadang(), ((ResultAddFighterAction) commandResult).getFighterId());
+                Khadang khadang = ((AddKhadang) ((CommandAction) command).getAction()).getKhadang();
+                addAgent(khadang, ((ResultAddFighterAction) commandResult).getFighterId());
+                khadang.setId(((ResultAddFighterAction) commandResult).getFighterId());
+                khadang.init(query.getGameBoard());
             }
         }
 

@@ -120,7 +120,13 @@ public class SuiManager {
             actionDrawer.setCurrentAction(((SuiAction) currentStep));
         else
             actionDrawer.setCurrentAction(null);
-        repaintAll();
+
+        if (!currentStep.sleep()) {
+            if (hasNextStep())
+                nextStep();
+        }else {
+            repaintAll();
+        }
     }
 
 
@@ -143,7 +149,13 @@ public class SuiManager {
             actionDrawer.setCurrentAction(((SuiAction) currentStep));
         else
             actionDrawer.setCurrentAction(null);
-        repaintAll();
+
+        if (!getSuiConfiguration().isFinalSceneOnly()) {
+            if (!currentStep.sleep())
+                prevStep();
+            else
+                repaintAll();
+        }
     }
 
     private void repaintAll() {
@@ -178,5 +190,7 @@ public class SuiManager {
         return this.players.getOrDefault(player, null);
     }
 
-
+    public SuiPanel getGamePanel() {
+        return gamePanel;
+    }
 }

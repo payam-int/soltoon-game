@@ -20,8 +20,8 @@ public class GameConfiguration {
     public static long EXIT_QUERY_TIME = 1000L;
 
     public static int NUMBER_OF_PLAYERS = 2;
-    public static int ROUNDS = 50;
-    public static int BOARD_WIDTH = 15;
+    public static int ROUNDS = 10;
+    public static int BOARD_WIDTH = 20;
     public static int BOARD_HEIGHT = 15;
 
     public static int PLAYERS_INITIAL_MONEY = 100;

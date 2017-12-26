@@ -72,7 +72,9 @@ public class SuiFighter extends JComponent {
 
             if (getWidth() < 50) {
                 graphics.setColor(suiManager.getSuiConfiguration().getPlayerColor(player));
-                graphics.fillRect(0, getHeight() - 2, getWidth(), 2);
+                graphics.fillRect(0, 0, getWidth(), 2);
+                graphics.setColor(Color.decode("#CC3333"));
+                graphics.fillRect(0, getHeight() - 2, ((int) (getWidth() * (getHp() / ((double) fighterUI.fighterType.getHealth())))), 2);
             } else {
                 graphics.setFont(new Font("Lora", Font.PLAIN, 12));
                 graphics.setColor(Color.BLACK);
