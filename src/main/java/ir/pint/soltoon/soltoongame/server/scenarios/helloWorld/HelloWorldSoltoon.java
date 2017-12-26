@@ -8,10 +8,8 @@ import ir.pint.soltoon.soltoongame.shared.map.Game;
 import ir.pint.soltoon.soltoongame.shared.map.KhadangType;
 
 public class HelloWorldSoltoon extends Soltoon {
-    private int p = 0;
-    private int fighters = 15;
 
-    private int currentCell = 0;
+    private int fighters = 15;
 
     @Override
     public void init(Game gameBoard) {

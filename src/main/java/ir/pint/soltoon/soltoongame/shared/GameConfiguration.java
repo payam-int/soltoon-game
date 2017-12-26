@@ -28,7 +28,7 @@ public class GameConfiguration {
     public static int PLAYERS_TURN_MONERY = 50;
 
 
-    public static int DEFAULT_CLIENTS_COUNT = 1;
+    public static int DEFAULT_CLIENTS_COUNT = 2;
     public static ComRemoteInfo DEFAULT_REMOTE_INFO = new ComRemoteInfo("player1", "First player", "127.0.0.1", 5566, "password1");
     public static ComRemoteInfo DEFAULT_REMOTE_INFO2 = new ComRemoteInfo("player2", "Second player", "127.0.0.1", 5567, "password2");
     public static ComRemoteConfig DEFAULT_REMOTE_CONFIG = new ComRemoteConfig("password1", 5566);

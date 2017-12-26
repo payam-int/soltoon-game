@@ -2,7 +2,7 @@ package ir.pint.soltoon.soltoongame.server;
 
 import ir.pint.soltoon.soltoongame.server.scenarios.freeWorld.FreeWorldServerManager;
 import ir.pint.soltoon.soltoongame.server.scenarios.helloWorld.HelloWorldServerManager;
-import ir.pint.soltoon.soltoongame.server.scenarios.name.SecondScenarioServerManager;
+import ir.pint.soltoon.soltoongame.server.scenarios.name.NameServerManager;
 import ir.pint.soltoon.soltoongame.server.sync.JavadTypeResultHandler;
 import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.Platform;
@@ -23,22 +23,7 @@ public class ServerRunner {
     }
 
     public static void run() {
-        GameConfiguration.NUMBER_OF_PLAYERS = GameConfiguration.DEFAULT_CLIENTS_COUNT;
-
-        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
-        ResultStorage.addResultHandler(javadTypeResultHandler);
-
-        run(GameConfiguration.DEFAULT_REMOTE_INFO, ServerMode.GUI);
-
-    }
-
-    public static void runTwoPlayers() {
         GameConfiguration.NUMBER_OF_PLAYERS = 2;
-
-//        JavadTypeResultHandler javadTypeResultHandler = new JavadTypeResultHandler();
-//        ResultStorage.addResultHandler(javadTypeResultHandler);
-
-
         run(Arrays.asList(GameConfiguration.DEFAULT_REMOTE_INFO, GameConfiguration.DEFAULT_REMOTE_INFO2), ServerMode.GUI);
 
     }
@@ -91,21 +76,21 @@ public class ServerRunner {
         Platform.exit(Platform.OK);
     }
 
-    public static void runSecondScenario(int width, int height) {
-        runSecondScenario(GameConfiguration.DEFAULT_REMOTE_INFO, width, height);
+    public static void runName(int width, int height) {
+        runName(GameConfiguration.DEFAULT_REMOTE_INFO, width, height);
     }
 
-    public static void runSecondScenario(ComRemoteInfo remoteInfo, int width, int height) {
+    public static void runName(ComRemoteInfo remoteInfo, int width, int height) {
         // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfo);
 
-        GUIRunner.openGUI();;
+        GUIRunner.openGUI();
 
         // CREATE comminucation wrapper
         ServerComminucation server = new ServerComminucation(comServer);
 
         // start judge
-        ServerManager serverManager = new SecondScenarioServerManager(server, width, height);
+        ServerManager serverManager = new NameServerManager(server, width, height);
         serverManager.run();
 
         Platform.exit(Platform.OK);

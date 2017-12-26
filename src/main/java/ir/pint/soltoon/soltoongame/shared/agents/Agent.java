@@ -21,11 +21,11 @@ public abstract class Agent implements Serializable, TimeAwareBean {
     protected Agent() {
     }
 
-    public abstract void init(Game gameBoard);
+    public abstract void init(Game g);
 
-    public abstract void lastThingsToDo(Game gameBoard);
+    public abstract void lastThingsToDo(Game g);
 
-    public abstract Action getAction(Game gb);
+    public abstract Action getAction(Game g);
 
     public void recieveResults(Result result, Command command) {
 
