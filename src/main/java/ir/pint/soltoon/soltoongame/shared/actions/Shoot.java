@@ -29,6 +29,7 @@ public final class Shoot extends Action {
 
         if (target == null)
             return true;
+
         if (target.getDistance(khadang.getCell()) > type.getShootingRange())
             return true;
         if (!((ManagerGameSoltoon) khadang.getOwner()).isMaster()) {

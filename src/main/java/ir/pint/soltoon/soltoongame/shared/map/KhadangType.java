@@ -52,7 +52,7 @@ public enum KhadangType {
             case CASTLE:
                 return 2;
             case MUSKETEER:
-                return 1;
+                return 0;
         }
         return null;
     }
@@ -81,11 +81,11 @@ public enum KhadangType {
             case MUSKETEER:
                 return new Musketeer(id, owner);
             case CASTLE:
-                return new Castle(id,owner);
+                return new Castle(id, owner);
             case CANNON:
-                return new Cannon(id,owner);
+                return new Cannon(id, owner);
             case GIANT:
-                return new Giant(id,owner);
+                return new Giant(id, owner);
         }
         return null;
     }
@@ -95,13 +95,13 @@ public enum KhadangType {
             case CANNON:
                 return 100;
             case GIANT:
-                return 30;
+                return 300;
             case CASTLE:
                 return 1000;
             case MUSKETEER:
                 return 10;
         }
-        return null;
+        return Integer.MAX_VALUE;
     }
 
     /**
@@ -120,13 +120,13 @@ public enum KhadangType {
             case CASTLE:
                 return 7;
         }
-        return null;
+        return 0;
     }
 
     public Integer getShootingPower() {
         switch (this) {
             case CASTLE:
-                return 100;
+                return 75;
             case MUSKETEER:
                 return 20;
             case CANNON:

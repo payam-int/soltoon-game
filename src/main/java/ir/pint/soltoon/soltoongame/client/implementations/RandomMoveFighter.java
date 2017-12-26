@@ -20,7 +20,6 @@ public class RandomMoveFighter extends Khadang {
 
     @Override
     public void lastThingsToDo(Game gameBoard) {
-        System.out.println(":(");
     }
 
     @Override

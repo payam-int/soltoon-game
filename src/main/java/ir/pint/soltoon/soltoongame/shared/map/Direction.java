@@ -3,6 +3,7 @@ package ir.pint.soltoon.soltoongame.shared.map;
 public enum Direction {
     RIGHT, LEFT, UP, DOWN;
 
+
     public int xDifference() {
         switch (this) {
             case DOWN:
@@ -30,4 +31,10 @@ public enum Direction {
         }
         return 0;
     }
+
+    public static Direction get(int i) {
+        int index = i % values().length;
+        return values()[index];
+    }
+
 }

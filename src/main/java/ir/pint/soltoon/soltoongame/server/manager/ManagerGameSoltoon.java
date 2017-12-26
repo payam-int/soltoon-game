@@ -9,14 +9,9 @@ import java.util.LinkedList;
 
 @SerializeAs(GameSoltoon.class)
 public class ManagerGameSoltoon extends GameSoltoon implements Comparable<ManagerGameSoltoon> {
-    protected Integer moneyPerTurn;
-    protected Integer money;
+
     protected Integer weight = 0;
     protected boolean master = false;
-
-    public int getMoney() {
-        return money;
-    }
 
 
     public ManagerGameSoltoon(Long id) {
@@ -47,9 +42,6 @@ public class ManagerGameSoltoon extends GameSoltoon implements Comparable<Manage
         this.moneyPerTurn = moneyPerTurn;
     }
 
-    public int getMoneyPerTurn() {
-        return moneyPerTurn;
-    }
 
     public void removeKhadang(GameKhadang gameKhadang) {
         khadangsId.remove(gameKhadang.getId());

@@ -1,9 +1,11 @@
 package ir.pint.soltoon.soltoongame.shared.actions;
 
+import ir.pint.soltoon.soltoongame.server.ServerConfiguration;
 import ir.pint.soltoon.soltoongame.server.manager.ManagerCell;
 import ir.pint.soltoon.soltoongame.server.manager.ManagerGame;
 import ir.pint.soltoon.soltoongame.server.manager.ManagerGameKhadang;
 import ir.pint.soltoon.soltoongame.server.manager.ManagerGameSoltoon;
+import ir.pint.soltoon.soltoongame.shared.GameConfiguration;
 import ir.pint.soltoon.soltoongame.shared.agents.Khadang;
 import ir.pint.soltoon.soltoongame.shared.map.KhadangType;
 import ir.pint.soltoon.soltoongame.shared.map.GameKhadang;
@@ -33,7 +35,7 @@ public final class AddKhadang extends Action {
 
         ManagerCell cell = (ManagerCell) gameBoard.getCell(x, y);
 
-        if (cell == null || cell.getKhadang() != null) {
+        if (cell == null || cell.hasKhadang()) {
             return true; // por nabashe yevaght
         }
 
@@ -44,7 +46,8 @@ public final class AddKhadang extends Action {
 
             boolean ok = true;
             for (GameKhadang khadang : gameBoard.getKhadangs().values()) {
-                if (cell.getDistance(khadang.getCell()) <= type.getShootingRange()) {
+                double coeff = khadang.getOwner().equals(soltoon) ? GameConfiguration.FRIEND_COEEF : 1;
+                if (cell.getDistance(khadang.getCell()) <= khadang.getType().getShootingRange() * coeff) {
                     ok = false;
                 }
             }
@@ -52,7 +55,7 @@ public final class AddKhadang extends Action {
             if (!ok) return true;
         }
 
-        soltoon.changeMoney(type.getCost());
+        soltoon.changeMoney(-type.getCost());
         soltoon.changeScore(type.getCreatePoint());
 
         GameKhadang khadang = PrivateCall.call(type, "getFactory", id, soltoon.getId());

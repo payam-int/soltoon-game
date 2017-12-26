@@ -6,6 +6,8 @@ import java.util.LinkedList;
 public class GameSoltoon extends GameAwareElement {
     private final Long id;
     protected Integer score;
+    protected Integer moneyPerTurn;
+    protected Integer money;
 
     protected LinkedList<Long> khadangsId = new LinkedList<>();
 
@@ -66,6 +68,13 @@ public class GameSoltoon extends GameAwareElement {
         return id.equals(that.id);
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public int getMoneyPerTurn() {
+        return moneyPerTurn;
+    }
 
     @Override
     protected void setGame(Game game) {

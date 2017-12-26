@@ -150,44 +150,48 @@ public abstract class ServerManager {
             }
         });
 
+        LinkedList<GameSoltoon> soltoonsToQuery = new LinkedList<>(gameSoltoons);
         // query soltoons
-        for (GameSoltoon soltoon : gameSoltoons) {
+        while (!soltoonsToQuery.isEmpty()) {
+            GameSoltoon soltoon = soltoonsToQuery.pop();
+
             ManagerGameSoltoon engineGameSoltoon = (ManagerGameSoltoon) soltoon;
             if (!agentFilter.isQueryAllowed(engineGameSoltoon))
                 continue;
 
             boolean skipPlayer = false;
-            while (!skipPlayer) {
-                QueryAction queryAction = new QueryAction(soltoon.getId(), gameBoard);
-                Command command = query(queryAction, soltoon.getId(), GameConfiguration.QUERY_WAIT_TIME);
+            QueryAction queryAction = new QueryAction(soltoon.getId(), gameBoard);
+            Command command = query(queryAction, soltoon.getId(), GameConfiguration.QUERY_WAIT_TIME);
 
-                if (command == null || (command instanceof CommandAction && !agentFilter.isActionAllowed(engineGameSoltoon, ((CommandAction) command).getAction())))
-                    command = new CommandNothing();
+            if (command == null || (command instanceof CommandAction && !agentFilter.isActionAllowed(engineGameSoltoon, ((CommandAction) command).getAction())))
+                command = new CommandNothing();
 
-                boolean commandSuccessful = false;
-                Result result = null;
+            boolean commandSuccessful = false;
+            Result result = null;
 
-                if (command instanceof CommandAction) {
-                    Action action = ((CommandAction) command).getAction();
-                    if (action instanceof AddKhadang) {
-                        Long uuid = UUID.getLong();
-                        commandSuccessful = !PrivateCall.<Boolean>call(action, "execute", gameBoard, soltoon, uuid);
-                        if (commandSuccessful)
-                            result = ResultAddFighterAction.successful(soltoon.getId(), uuid);
-                    } else if (((CommandAction) command).getAction() instanceof Check) {
-                        commandSuccessful = checkAction(command, soltoon);
-                    }
-
-                    skipPlayer = !commandSuccessful;
-                } else {
-                    skipPlayer = true;
+            if (command instanceof CommandAction) {
+                Action action = ((CommandAction) command).getAction();
+                if (action instanceof AddKhadang) {
+                    Long uuid = UUID.getLong();
+                    commandSuccessful = !PrivateCall.<Boolean>call(action, "execute", gameBoard, soltoon, uuid);
+                    if (commandSuccessful)
+                        result = ResultAddFighterAction.successful(soltoon.getId(), uuid);
+                } else if (((CommandAction) command).getAction() instanceof Check) {
+                    commandSuccessful = checkAction(command, soltoon);
                 }
 
-                if (!commandSuccessful) {
-                    result = new ResultAction(soltoon.getId(), Status.FAILURE);
-                }
-                sendResult(result, command, soltoon.getId());
+                skipPlayer = !commandSuccessful;
+            } else {
+                skipPlayer = true;
             }
+
+            if (!commandSuccessful) {
+                result = new ResultAction(soltoon.getId(), Status.FAILURE);
+            }
+            sendResult(result, command, soltoon.getId());
+
+            if (!skipPlayer)
+                soltoonsToQuery.add(soltoon);
         }
     }
 

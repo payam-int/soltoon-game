@@ -41,7 +41,6 @@ public class HelloWorldSoltoon extends Soltoon {
                 return null;
             }
         }, (int) (gb.getMapWidth() * Math.random()), (int) (gb.getMapHeight() * Math.random()));
-        System.out.println(addKhadang);
         return fighters-- > 0 ? addKhadang : null;
     }
 }

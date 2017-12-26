@@ -53,7 +53,7 @@ public class ServerRunner {
         ComServer comServer = ComServer.initiate(remoteInfos);
 
         if (serverMode == ServerMode.GUI) {
-            GUIRunner.openGUI();
+            GUIRunner.openServerGui();
         }
 
         // CREATE comminucation wrapper
@@ -79,7 +79,7 @@ public class ServerRunner {
         // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfo);
 
-        GUIRunner.openGUI();
+        GUIRunner.openServerGui();
 
         // CREATE comminucation wrapper
         ServerComminucation server = new ServerComminucation(comServer);
@@ -99,7 +99,7 @@ public class ServerRunner {
         // rebound communication between filters and clients.
         ComServer comServer = ComServer.initiate(remoteInfo);
 
-        GUIRunner.openGUI();
+        GUIRunner.openServerGui();
 
         // CREATE comminucation wrapper
         ServerComminucation server = new ServerComminucation(comServer);
